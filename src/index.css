@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-cream-50 font-sans text-ink antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  html[lang='hi'] body {
+    font-family: 'Noto Sans Devanagari', 'Manrope', system-ui, sans-serif;
+  }
+  /* Letter-spacing breaks Devanagari conjuncts — neutralise it in Hindi mode. */
+  html[lang='hi'] [class*='tracking-'],
+  html[lang='hi'] .eyebrow,
+  html[lang='hi'] .text-eyebrow {
+    letter-spacing: 0 !important;
+  }
+  ::selection {
+    @apply bg-gold-300 text-navy-900;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold-500 ring-offset-2 ring-offset-white;
+  }
+  img {
+    @apply select-none;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-eyebrow font-bold uppercase text-gold-600;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply h-px w-8 bg-current;
+  }
+  .eyebrow-light {
+    @apply text-gold-400;
+  }
+  .h-display {
+    @apply font-display font-medium tracking-[-0.015em] text-navy-900;
+  }
+  .lead {
+    @apply text-[1.05rem] leading-[1.8] text-ink-soft;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-navy-900 text-white hover:bg-navy-800 hover:shadow-lift;
+  }
+  .btn-gold {
+    @apply btn bg-gold-500 text-navy-950 hover:bg-gold-400 hover:shadow-lift;
+  }
+  .btn-leaf {
+    @apply btn bg-leaf-600 text-white hover:bg-leaf-700;
+  }
+  .btn-outline {
+    @apply btn border border-navy-900/20 text-navy-900 hover:border-navy-900 hover:bg-navy-900 hover:text-white;
+  }
+  .btn-ghost-light {
+    @apply btn border border-white/40 text-white backdrop-blur-sm hover:bg-white hover:text-navy-900;
+  }
+  .card {
+    @apply rounded-2xl border border-navy-900/5 bg-white shadow-card;
+  }
+  .field-label {
+    @apply mb-1.5 block text-[0.8rem] font-semibold text-navy-900;
+  }
+  .field {
+    @apply w-full rounded-xl border border-navy-900/15 bg-white px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink-mute focus:border-navy-600 focus:ring-4 focus:ring-navy-600/10;
+  }
+  .field-error {
+    @apply mt-1 text-xs font-medium text-red-600;
+  }
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .mask-fade-x {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+}
