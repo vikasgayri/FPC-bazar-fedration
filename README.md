@@ -92,8 +92,10 @@ Every image has a branded fallback, so a missing file never shows a broken icon.
 ## Content notes for the client
 
 - Content is taken from *FPC Bazaar Federation Proposal* and *Company Profile (13 Jun 2025)*.
-- **CIN differs between documents**: proposal shows `U01100RJ2022NPL078043`; the MCA screenshot in the
-  profile shows `U85197RJ2022NPL078943`. The site uses the MCA screenshot value — please confirm.
+- **CIN confirmed** from the MCA Certificate of Incorporation: `U85197RJ2022NPL078943` (incorporated 3 Jan 2022,
+  Section 8, limited by shares). PAN `AAECF8742R`, TAN `JPRF02094B`. The proposal's `U01100…078043` was a typo.
+- Registered address and directors (Laxman Lohana Satiya Sindhi, Sourabh Sindhi) follow the MCA certificate and
+  Section 8 licence application; the MoA main object is shown on the About page.
 - Proposal names **Laxman Lohana** as Chairman; profile lists **Naveen Dhingra** as MD. Site follows that.
 - Contact details combine both documents (Jaipur office, phones, both emails) — confirm the final set.
 - Products, prices, producers, ratings and orders are **illustrative demo data**.

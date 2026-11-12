@@ -10,17 +10,22 @@ export const org = {
   motto: { en: 'Chemical-free Farming • Healthy India • Self-reliant India', hi: 'जहर मुक्त कृषि • स्वस्थ भारत • आत्मनिर्भर भारत' } as LText,
   slogan: { en: 'Prosperous India, Prosperous Farmers', hi: 'समृद्ध किसान, समृद्ध भारत' } as LText,
   footerLine: { en: 'Cooperation • Employment • Development', hi: 'सहकारिता • रोजगार • विकास' } as LText,
+  // Verified from the MCA Certificate of Incorporation (issued 3 Jan 2022, Central Registration Centre).
   cin: 'U85197RJ2022NPL078943',
   registeredYear: 2022,
+  incorporatedOn: '2022-01-03',
   roc: 'RoC – Jaipur',
+  pan: 'AAECF8742R',
+  tan: 'JPRF02094B',
+  directors: ['Laxman Lohana Satiya Sindhi', 'Sourabh Sindhi'],
   type: {
-    en: 'Producer Cooperative Federation — Section 8 (Not-for-Profit) Company, Ministry of Corporate Affairs',
-    hi: 'उत्पादक सहकारी फेडरेशन — धारा 8 (गैर-लाभकारी) कंपनी, कॉर्पोरेट कार्य मंत्रालय',
+    en: 'Section 8 (Not-for-Profit) Company, limited by shares — licensed under Section 8 of the Companies Act, 2013',
+    hi: 'धारा 8 (गैर-लाभकारी) कंपनी, शेयरों द्वारा सीमित — कंपनी अधिनियम, 2013 की धारा 8 के अंतर्गत लाइसेंस प्राप्त',
   } as LText,
   certifications: ['Section 12A', 'Section 80G', 'MCA Registered (2022)'],
   address: {
-    en: '104, Vishnu Apartment, Chomu House Circle, C-Scheme, Jaipur, Rajasthan 302001',
-    hi: '104, विष्णु अपार्टमेंट, चौमूं हाउस सर्किल, सी-स्कीम, जयपुर, राजस्थान 302001',
+    en: 'Flat No. 104, Vishnu Apartment, A-8, Sardar Patel Marg, Chomu House Circle, Jaipur, Rajasthan 302001',
+    hi: 'फ्लैट नं. 104, विष्णु अपार्टमेंट, A-8, सरदार पटेल मार्ग, चौमूं हाउस सर्किल, जयपुर, राजस्थान 302001',
   } as LText,
   phones: ['+91 88906 56575', '+91 89906 56575'],
   landline: '0141-4820481',
@@ -92,6 +97,7 @@ export interface Leader {
 export const chairman: Leader = {
   name: 'Laxman Lohana',
   role: { en: 'Chairman', hi: 'अध्यक्ष' },
+  credential: { en: 'Founder Director & Promoter', hi: 'संस्थापक निदेशक एवं प्रवर्तक' },
   photo: team.laxmanLohana,
   message: {
     en: 'It gives me immense pleasure to introduce FPC Bazaar Federation, an organisation committed to transforming the agricultural landscape of our nation. Agriculture is not just a profession; it is the backbone of our economy and a way of life for millions. We are driven by the belief that empowering farmers is key to building a prosperous and sustainable future. Our vision is clear: to be a trusted partner in every farmer’s journey towards growth and success. I invite you to join hands with us in this mission.',
@@ -130,6 +136,7 @@ export const leadership: Leader[] = [
   {
     name: 'Sourabh Sindhi',
     role: { en: 'Chief Financial Officer', hi: 'मुख्य वित्तीय अधिकारी' },
+    credential: { en: 'Director & founding subscriber', hi: 'निदेशक एवं संस्थापक सदस्य' },
   },
   {
     name: 'Mittal Shah',
@@ -180,3 +187,17 @@ export const schemes = [
   { title: { en: 'E-Auto Rickshaw Door-to-Door', hi: 'ई-ऑटो रिक्शा डोर-टू-डोर' }, text: { en: 'Fresh fruits & vegetables supply by trained youth entrepreneurs.', hi: 'प्रशिक्षित युवा उद्यमियों द्वारा फल व सब्ज़ी की घर-घर आपूर्ति।' } },
   { title: { en: 'Amul Parlour & Café', hi: 'अमूल पार्लर एवं कैफ़े' }, text: { en: 'Outlet programme with up to 90% loan facility for entrepreneurs.', hi: 'उद्यमियों के लिए 90% तक लोन सुविधा के साथ आउटलेट योजना।' } },
 ]
+
+/** Main object & key clauses — Memorandum of Association (INC-13) and Section 8 licence application. */
+export const moa = {
+  object: {
+    en: 'To support, promote, execute, train, consult and set up / run centres providing public service in the modernisation of agriculture and all related activities; to develop programmes for the growth and diversification of agriculture and agro-based industries; to educate and assist farmers in farming with new techniques and equipment by availing benefits of government policies and promotion schemes; to take promotion subsidy from government, enterprises or CSR funds for the benefit of farmers; and to pave the way for integrated producers’ organisations with forward and backward linkages.',
+    hi: 'कृषि के आधुनिकीकरण एवं संबंधित सभी गतिविधियों हेतु जनसेवा केंद्रों की स्थापना/संचालन, प्रशिक्षण, परामर्श एवं प्रोत्साहन; कृषि व कृषि-आधारित उद्योगों के विकास और विविधीकरण के कार्यक्रम; सरकारी नीतियों व प्रोत्साहन योजनाओं का लाभ दिलाकर किसानों को नई तकनीक व उपकरणों से खेती हेतु शिक्षित करना; किसानों के हित में सरकार, उद्यमों या CSR कोष से प्रोत्साहन सहायता प्राप्त करना; तथा फॉरवर्ड व बैकवर्ड लिंकेज वाले एकीकृत उत्पादक संगठनों का मार्ग प्रशस्त करना।',
+  },
+  clauses: [
+    { en: 'Not-for-profit: any profits or income are applied solely to promote the objects — no dividend is paid to members.', hi: 'गैर-लाभकारी: कोई भी लाभ या आय केवल उद्देश्यों के लिए उपयोग — सदस्यों को कोई लाभांश नहीं।' },
+    { en: 'The objects of the company extend to the whole of India.', hi: 'कंपनी के उद्देश्य पूरे भारत में लागू।' },
+    { en: 'Objects are carried out with the permission of competent authorities.', hi: 'उद्देश्य सक्षम प्राधिकरणों की अनुमति से संचालित।' },
+    { en: 'Accounts are audited annually by qualified auditors.', hi: 'खातों का प्रतिवर्ष योग्य लेखा परीक्षकों द्वारा ऑडिट।' },
+  ] as LText[],
+}

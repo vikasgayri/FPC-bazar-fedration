@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
-import { BadgeCheck, Building2, CalendarCheck2, FileText, Landmark, MapPin, Quote, ScrollText, UserRound, Check } from 'lucide-react'
+import { BadgeCheck, Building2, CalendarCheck2, FileText, Landmark, MapPin, Quote, ScrollText, UserRound, Check, Users, Receipt } from 'lucide-react'
 import PageHero from '@/components/ui/PageHero'
 import Img from '@/components/ui/Img'
 import { Reveal, RevealImage } from '@/components/ui/Motion'
 import { Ornament, SectionHeading } from '@/components/ui/Primitives'
 import { useLang } from '@/hooks/useLang'
 import { useDocumentTitle } from '@/hooks/useUi'
-import { about, advisory, chairman, fpoAgenda, howItWorks, leadership, missionVision, org, schemes } from '@/data/site'
+import { about, advisory, chairman, fpoAgenda, howItWorks, leadership, missionVision, moa, org, schemes } from '@/data/site'
 import { real, stock } from '@/data/images'
 
 const initials = (n: string) =>
@@ -24,10 +24,12 @@ export default function About() {
   const reg = [
     { I: Building2, k: t('about.legalName'), v: org.legalName },
     { I: FileText, k: t('about.cin'), v: org.cin },
-    { I: CalendarCheck2, k: t('about.year'), v: `${org.registeredYear}, Rajasthan • ${org.roc}` },
+    { I: CalendarCheck2, k: t('about.incorporated'), v: `${t('about.incorporatedVal')} • ${org.roc}` },
+    { I: Receipt, k: `${t('about.pan')} / ${t('about.tan')}`, v: `${org.pan} • ${org.tan}` },
     { I: Landmark, k: t('about.type'), v: L(org.type) },
     { I: MapPin, k: t('about.office'), v: L(org.address) },
     { I: UserRound, k: t('about.chairman'), v: chairman.name },
+    { I: Users, k: t('about.directors'), v: org.directors.join(' • ') },
     { I: BadgeCheck, k: t('about.certifications'), v: org.certifications.join(' • ') },
     { I: ScrollText, k: t('about.targetStates'), v: org.targetStates[lang].join(' • ') },
   ]
@@ -101,6 +103,7 @@ export default function About() {
               <p>
                 <span className="font-display text-xl">{chairman.name}</span>
                 <span className="ml-3 text-xs font-bold uppercase tracking-[0.2em] text-gold-400">{L(chairman.role)}</span>
+                {chairman.credential && <span className="mt-1 block text-sm text-white/60">{L(chairman.credential)}</span>}
               </p>
             </div>
           </Reveal>
@@ -211,7 +214,7 @@ export default function About() {
               <div className="flex items-center justify-between border-b border-gold-500/20 bg-gold-50 px-6 py-4">
                 <p className="font-display text-lg text-navy-900">{org.legalName}</p>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-leaf-600 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
-                  <BadgeCheck className="h-3.5 w-3.5" /> Registered 2022
+                  <BadgeCheck className="h-3.5 w-3.5" /> Section 8 • 2022
                 </span>
               </div>
               <dl className="divide-y divide-navy-900/5">
@@ -224,6 +227,22 @@ export default function About() {
                   </div>
                 ))}
               </dl>
+            </Reveal>
+            <Reveal delay={0.1} className="mt-6 rounded-[1.75rem] border border-navy-900/5 bg-white p-6 shadow-card sm:p-8">
+              <span className="eyebrow">{t('about.moaEyebrow')}</span>
+              <h3 className="mt-3 font-display text-2xl text-navy-900">{t('about.moaTitle')}</h3>
+              <blockquote className="mt-5 border-l-2 border-gold-500 pl-5 text-[0.98rem] leading-relaxed text-ink-soft">{L(moa.object)}</blockquote>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {moa.clauses.map((c, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-navy-900">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-leaf-600 text-white">
+                      <Check className="h-3 w-3" />
+                    </span>
+                    {L(c)}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 text-xs text-ink-mute">{t('about.moaNote')}</p>
             </Reveal>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link to="/register" className="btn-primary">

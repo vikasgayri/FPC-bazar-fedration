@@ -54,7 +54,7 @@ export default function Contact() {
               <div className="relative min-h-[360px] flex-1 overflow-hidden rounded-[1.75rem] shadow-card">
                 <iframe
                   title="FPC Bazaar Federation office map"
-                  src="https://www.google.com/maps?q=Chomu+House+Circle,+C-Scheme,+Jaipur&output=embed"
+                  src="https://www.google.com/maps?q=Vishnu+Apartment,+Sardar+Patel+Marg,+Chomu+House+Circle,+Jaipur+302001&output=embed"
                   className="absolute inset-0 h-full w-full border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
