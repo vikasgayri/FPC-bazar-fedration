@@ -41,7 +41,7 @@ export default function GalleryAdmin() {
           {data?.map((g) => (
             <figure key={g.id} className="group overflow-hidden rounded-2xl bg-white shadow-card">
               <div className="relative">
-                <Img src={g.image} alt="" wrapClassName="aspect-[4/3]" />
+                <Img src={g.image} alt="" sizes="(min-width: 1024px) 20vw, 50vw" wrapClassName="aspect-[4/3]" />
                 <button
                   onClick={async () => {
                     if (!confirm(t('admin.confirmDelete'))) return

@@ -33,7 +33,7 @@ export default function Priorities() {
               transition={{ duration: 0.8, delay: (i % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link to={`/initiatives/${it.slug}`} className="group relative block h-[420px] overflow-hidden rounded-[1.75rem] bg-navy-900">
-                <Img src={it.image} fallback={it.fallback} alt={L(it.title)} wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-110" />
+                <Img src={it.image} fallback={it.fallback} alt={L(it.title)} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/55 to-navy-950/5 transition duration-500 group-hover:via-navy-950/75" />
                 <div className="absolute left-6 top-6 flex items-center gap-3">
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15 text-gold-300 backdrop-blur-md transition group-hover:bg-gold-500 group-hover:text-navy-950">

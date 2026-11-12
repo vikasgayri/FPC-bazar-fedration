@@ -29,7 +29,7 @@ export default function Cart() {
                 <ul className="divide-y divide-navy-900/5 rounded-[1.5rem] bg-white px-5 shadow-card sm:px-6">
                   {lines.map(({ product: p, qty }) => (
                     <li key={p.id} className="flex gap-4 py-5 sm:gap-6">
-                      <Img src={p.image} alt={L(p.name)} wrapClassName="h-24 w-24 shrink-0 rounded-2xl sm:h-28 sm:w-28" />
+                      <Img src={p.image} alt={L(p.name)} sizes="112px" wrapClassName="h-24 w-24 shrink-0 rounded-2xl sm:h-28 sm:w-28" />
                       <div className="flex min-w-0 flex-1 flex-col">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">

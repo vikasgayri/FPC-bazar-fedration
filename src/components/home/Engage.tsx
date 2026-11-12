@@ -44,8 +44,8 @@ export function JoinTypes() {
   const { t } = useLang()
   const types = [
     { key: 'FARMER', I: Sprout, title: t('register.farmer'), text: t('register.farmerDesc'), img: stock.oxenPlough, fb: real.fieldVisit },
-    { key: 'FPO', I: Building2, title: t('register.fpo'), text: t('register.fpoDesc'), img: real.fpoTraining2, fb: stock.farmers },
-    { key: 'SHG', I: Users, title: t('register.shg'), text: t('register.shgDesc'), img: real.shgHandicraft, fb: stock.villageWomen },
+    { key: 'FPO', I: Building2, title: t('register.fpo'), text: t('register.fpoDesc'), img: real.fpoTraining2, fb: real.fpoTraining1 },
+    { key: 'SHG', I: Users, title: t('register.shg'), text: t('register.shgDesc'), img: real.shgHandicraft, fb: real.shgJuteBags },
     { key: 'DAIRY', I: Milk, title: t('register.dairy'), text: t('register.dairyDesc'), img: stock.cowCalf, fb: real.gaushalaCattle },
   ]
   return (
@@ -57,7 +57,7 @@ export function JoinTypes() {
             <Reveal key={key} delay={i * 0.08}>
               <Link to={`/register?type=${key}`} className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-navy-900/5 bg-cream-50 transition hover:-translate-y-1 hover:shadow-lift">
                 <div className="relative">
-                  <Img src={img} fallback={fb} alt={title} wrapClassName="aspect-[4/3]" className="transition duration-700 group-hover:scale-105" />
+                  <Img src={img} fallback={fb} alt={title} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" wrapClassName="aspect-[4/3]" className="transition duration-700 group-hover:scale-105" />
                   <span className="absolute -bottom-6 left-6 grid h-12 w-12 place-items-center rounded-2xl bg-navy-900 text-gold-400 shadow-lift transition group-hover:bg-gold-500 group-hover:text-navy-950">
                     <I className="h-5 w-5" />
                   </span>
@@ -84,7 +84,7 @@ export function NewsGallery() {
   const gallery = useAsync(() => galleryService.list(), [])
   const [lb, setLb] = useState<number | null>(null)
   const [lead, ...rest] = news.data ?? []
-  const pics = (gallery.data ?? []).slice(0, 8)
+  const pics = (gallery.data ?? []).slice(0, 9)
 
   return (
     <section className="bg-cream-50 py-24 sm:py-32">
@@ -102,7 +102,7 @@ export function NewsGallery() {
           <div className="mt-14 grid gap-6 lg:grid-cols-12">
             <Reveal className="lg:col-span-7">
               <Link to={`/news/${lead.slug}`} className="group relative block h-full min-h-[420px] overflow-hidden rounded-[1.75rem]">
-                <Img src={lead.image} alt={L(lead.title)} wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-105" overlay />
+                <Img src={lead.image} alt={L(lead.title)} sizes="(min-width: 1024px) 58vw, 100vw" wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-105" overlay />
                 <div className="absolute inset-x-0 bottom-0 p-7 text-white sm:p-10">
                   <span className="rounded-full bg-gold-500 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-navy-950">{lead.category}</span>
                   <h3 className="mt-4 max-w-xl font-display text-[1.7rem] leading-tight sm:text-[2.1rem]">{L(lead.title)}</h3>
@@ -116,7 +116,7 @@ export function NewsGallery() {
               {rest.slice(0, 3).map((n, i) => (
                 <Reveal key={n.id} delay={i * 0.08}>
                   <Link to={`/news/${n.slug}`} className="group flex gap-5 rounded-2xl bg-white p-4 shadow-card transition hover:shadow-lift">
-                    <Img src={n.image} alt="" wrapClassName="h-24 w-28 shrink-0 rounded-xl sm:h-28 sm:w-36" className="transition duration-700 group-hover:scale-110" />
+                    <Img src={n.image} alt="" sizes="144px" wrapClassName="h-24 w-28 shrink-0 rounded-xl sm:h-28 sm:w-36" className="transition duration-700 group-hover:scale-110" />
                     <div className="min-w-0 py-1">
                       <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold-600">
                         {n.category} • {fmtDate(n.date, lang)}
@@ -149,9 +149,9 @@ export function NewsGallery() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: (i % 4) * 0.06, duration: 0.6 }}
-              className={`group relative overflow-hidden rounded-2xl ${i === 0 ? 'col-span-2 row-span-2' : ''} ${i === 5 ? 'md:col-span-2' : ''}`}
+              className={`group relative overflow-hidden rounded-2xl ${i === 0 ? 'col-span-2 row-span-2' : ''} `}
             >
-              <Img src={g.image} alt={L(g.title)} wrapClassName="absolute inset-0" className="transition duration-700 group-hover:scale-110" />
+              <Img src={g.image} alt={L(g.title)} sizes={i === 0 ? '(min-width: 768px) 50vw, 100vw' : '(min-width: 768px) 25vw, 50vw'} wrapClassName="absolute inset-0" className="transition duration-700 group-hover:scale-110" />
               <span className="absolute inset-0 flex items-end bg-gradient-to-t from-navy-950/80 to-transparent p-4 text-left text-sm font-semibold text-white opacity-0 transition group-hover:opacity-100">
                 {L(g.title)}
               </span>
@@ -191,7 +191,7 @@ export function CtaBand() {
   const { t } = useLang()
   return (
     <section className="relative isolate overflow-hidden bg-navy-950 py-24 sm:py-32">
-      <Img src={real.biogasPlant} fallback={stock.cowsPen} alt="" wrapClassName="absolute inset-0 -z-10" className="opacity-40" />
+      <Img src={stock.wheatField} fallback={real.fpoTraining2} alt="" wrapClassName="absolute inset-0 -z-10" className="opacity-40" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950 via-navy-950/85 to-leaf-800/60" />
       <div className="container grid items-center gap-10 lg:grid-cols-12">
         <Reveal className="lg:col-span-8">

@@ -34,7 +34,7 @@ export default function NewsDetail() {
       <section className="bg-cream-50 py-16 sm:py-24">
         <div className="container grid gap-12 lg:grid-cols-12">
           <article className="lg:col-span-8">
-            <Img src={n.image} alt={L(n.title)} wrapClassName="rounded-[1.75rem] aspect-[16/10] bg-white" className="!object-contain" />
+            <Img src={n.image} alt={L(n.title)} fit="contain" priority sizes="(min-width: 1024px) 66vw, 100vw" wrapClassName="rounded-[1.75rem] aspect-[16/10]" />
             <p className="mt-10 font-display text-[1.45rem] leading-[1.6] text-navy-900">{L(n.excerpt)}</p>
             <Ornament className="my-8" />
             {L(n.body)
@@ -58,7 +58,7 @@ export default function NewsDetail() {
                   .map((x) => (
                     <li key={x.id}>
                       <Link to={`/news/${x.slug}`} className="group flex gap-3">
-                        <Img src={x.image} alt="" wrapClassName="h-16 w-20 shrink-0 rounded-lg" />
+                        <Img src={x.image} alt="" sizes="80px" wrapClassName="h-16 w-20 shrink-0 rounded-lg" />
                         <div>
                           <p className="line-clamp-2 text-sm font-semibold text-navy-900 group-hover:text-leaf-700">{L(x.title)}</p>
                           <p className="mt-1 text-xs text-ink-mute">{fmtDate(x.date, lang)}</p>

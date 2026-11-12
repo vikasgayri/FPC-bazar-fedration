@@ -18,6 +18,9 @@ import {
   type LucideProps,
 } from 'lucide-react'
 import { brand } from '@/data/images'
+import { imgSources } from '@/utils/images'
+
+const logo = imgSources(brand.logo, 480)
 import type { IconKey } from '@/data/initiatives'
 import { cn } from '@/utils/format'
 import { useLang } from '@/hooks/useLang'
@@ -27,7 +30,7 @@ export function Logo({ light, compact, className }: { light?: boolean; compact?:
   return (
     <Link to="/" className={cn('group flex min-w-0 items-center gap-2.5 sm:gap-3', className)} aria-label="FPC Bazaar Federation — Home">
       <span className={cn('relative grid shrink-0 place-items-center rounded-full bg-white transition-all duration-500', compact ? 'h-11 w-11 sm:h-12 sm:w-12' : 'h-12 w-12 sm:h-16 sm:w-16', light ? 'ring-1 ring-white/20' : 'shadow-soft ring-1 ring-gold-500/30')}>
-        <img src={brand.logo} alt="" className="h-[88%] w-[88%] object-contain" />
+        <img src={logo.src} srcSet={logo.srcSet} sizes="64px" width={64} height={64} alt="" className="h-[88%] w-[88%] object-contain" />
       </span>
       <span className="leading-none">
         <span className={cn('block whitespace-nowrap font-display font-semibold tracking-[-0.01em]', compact ? 'text-[0.95rem] sm:text-[1.05rem]' : 'text-[1rem] sm:text-[1.3rem]', light ? 'text-white' : 'text-navy-900')}>

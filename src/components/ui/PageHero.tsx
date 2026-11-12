@@ -27,7 +27,7 @@ export default function PageHero({
   const { t } = useLang()
   return (
     <section className="relative isolate overflow-hidden bg-navy-950">
-      <Img src={image} fallback={fallback} alt="" loading="eager" wrapClassName="absolute inset-0 -z-10" className="scale-105 opacity-60" />
+      <Img src={image} fallback={fallback} alt="" priority wrapClassName="absolute inset-0 -z-10" className="scale-105 opacity-60" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/30" />
       <div className="absolute inset-0 -z-10 bg-grain opacity-60" />
       <div className={`container-wide ${size === 'sm' ? 'pb-14 pt-36 sm:pt-40' : 'pb-20 pt-40 sm:pb-24 sm:pt-48'}`}>

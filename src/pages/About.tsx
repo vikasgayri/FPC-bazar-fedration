@@ -7,7 +7,7 @@ import { Ornament, SectionHeading } from '@/components/ui/Primitives'
 import { useLang } from '@/hooks/useLang'
 import { useDocumentTitle } from '@/hooks/useUi'
 import { about, advisory, chairman, fpoAgenda, howItWorks, leadership, missionVision, moa, org, schemes } from '@/data/site'
-import { real, stock } from '@/data/images'
+import { real } from '@/data/images'
 
 const initials = (n: string) =>
   n
@@ -40,7 +40,7 @@ export default function About() {
         title={t('about.pageTitle')}
         text={t('about.pageText')}
         image={real.fpoTraining2}
-        fallback={stock.farmers}
+        fallback={real.fpoTraining1}
         crumbs={[{ label: t('nav.about') }]}
         eyebrow={org.tagline.hi}
       />
@@ -71,13 +71,13 @@ export default function About() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <RevealImage className="row-span-2 overflow-hidden rounded-[1.75rem]">
-              <Img src={real.polyhouseVisit} alt="Polyhouse visit" wrapClassName="h-full min-h-[420px]" />
+              <Img src={real.polyhouseCrop} alt="Polyhouse cultivation" sizes="(min-width: 1024px) 25vw, 50vw" wrapClassName="h-full min-h-[420px]" />
             </RevealImage>
             <RevealImage from="right" className="overflow-hidden rounded-[1.75rem]">
-              <Img src={real.shgHandicraft} alt="SHG artisans" wrapClassName="aspect-square" />
+              <Img src={real.shgHandicraft} alt="SHG artisans" sizes="(min-width: 1024px) 25vw, 50vw" wrapClassName="aspect-square" />
             </RevealImage>
             <RevealImage from="bottom" className="overflow-hidden rounded-[1.75rem]">
-              <Img src={real.gaushalaCattle} alt="Gaushala" wrapClassName="aspect-square" />
+              <Img src={real.gaushalaCattle} alt="Gaushala" sizes="(min-width: 1024px) 25vw, 50vw" wrapClassName="aspect-square" />
             </RevealImage>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function About() {
           <Reveal className="lg:col-span-4">
             <div className="relative mx-auto w-64 sm:w-80">
               <div className="absolute -inset-4 rounded-[2.2rem] border border-gold-500/30" />
-              <Img src={chairman.photo!} alt={chairman.name} wrapClassName="aspect-[4/5] rounded-[1.8rem] bg-white" className="object-top" />
+              <Img src={chairman.photo!} alt={chairman.name} sizes="320px" wrapClassName="aspect-[4/5] rounded-[1.8rem] bg-white" />
             </div>
           </Reveal>
           <Reveal delay={0.15} className="lg:col-span-8">
@@ -119,7 +119,7 @@ export default function About() {
               <Reveal key={m.name} delay={(i % 4) * 0.07} className="group">
                 <div className="relative overflow-hidden rounded-[1.5rem] bg-cream-100">
                   {m.photo ? (
-                    <Img src={m.photo} alt={m.name} wrapClassName="aspect-[4/4.6] bg-cream-100" className="object-top transition duration-700 group-hover:scale-105" />
+                    <Img src={m.photo} alt={m.name} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" wrapClassName="aspect-[4/4.6] bg-cream-100" className="transition duration-700 group-hover:scale-105" />
                   ) : (
                     <div className="grid aspect-[4/4.6] place-items-center bg-gradient-to-br from-navy-800 to-navy-950 font-display text-6xl text-gold-400">{initials(m.name)}</div>
                   )}
@@ -142,7 +142,7 @@ export default function About() {
               {advisory.map((a, i) => (
                 <Reveal key={a.name} delay={(i % 6) * 0.04} className="flex items-center gap-4 rounded-2xl border border-navy-900/5 bg-cream-50 p-4 transition hover:border-gold-500/40 hover:bg-white hover:shadow-card">
                   {a.photo ? (
-                    <Img src={a.photo} alt={a.name} wrapClassName="h-14 w-14 shrink-0 rounded-full ring-2 ring-gold-500/40" className="object-top" />
+                    <Img src={a.photo} alt={a.name} sizes="64px" wrapClassName="h-14 w-14 shrink-0 rounded-full ring-2 ring-gold-500/40" />
                   ) : (
                     <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-navy-900 font-display text-sm text-gold-400">{initials(a.name)}</span>
                   )}
@@ -178,7 +178,7 @@ export default function About() {
       <section className="bg-white py-24 sm:py-32">
         <div className="container grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <RevealImage className="overflow-hidden rounded-[2rem]">
-            <Img src={real.farmerMeeting} fallback={stock.farmers} alt="FPO meeting" wrapClassName="aspect-[4/3.4]" />
+            <Img src={real.fpoTraining1} alt="FPO training meeting" sizes="(min-width: 1024px) 50vw, 100vw" wrapClassName="aspect-[4/3.4]" />
           </RevealImage>
           <div>
             <SectionHeading eyebrow={t('about.agendaEyebrow')} title={t('about.agendaTitle')} />

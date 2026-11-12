@@ -184,3 +184,28 @@ export const heroSlides = [
   { src: stock.greenhouse, fallback: real.polyhouseCrop, focus: '50% 45%' },
   { src: stock.oxenPlough, fallback: real.fpoTraining2, focus: '60% 50%' },
 ]
+
+/**
+ * Per-image display hints.
+ *  • fit: 'contain' — documents/posters/clippings are shown whole on a blurred backdrop, never cropped.
+ *  • pos — CSS object-position focal point so faces/subjects stay in frame when cropped.
+ * Portrait photos without a hint default to an upper-third focus (faces).
+ */
+const HINTS: Record<string, { fit?: 'cover' | 'contain'; pos?: string }> = {
+  [real.newsAmulLaunch]: { fit: 'contain' },
+  [real.newsOrganicFertilizer]: { fit: 'contain' },
+  [real.tribalSchemePoster]: { fit: 'contain' },
+  [real.tribalDairyProject]: { fit: 'contain' },
+  [real.cowShedDesign]: { fit: 'contain' },
+  [real.startupTraining]: { pos: '40% 35%' },
+  [real.fpoTraining2]: { pos: '50% 40%' },
+  [real.polyhouseCrop]: { pos: '50% 30%' },
+  [real.biogasBalloon]: { pos: '50% 40%' },
+  [real.shgHandicraft]: { pos: '50% 35%' },
+  [team.laxmanLohana]: { pos: '50% 20%' },
+  [team.narendraGaur]: { pos: '50% 30%' },
+  [team.shyamSingh]: { pos: '50% 20%' },
+  [team.mittalShah]: { pos: '50% 20%' },
+  [team.sourabhSindhi]: { pos: '50% 18%' },
+}
+export const imageHint = (src: string) => HINTS[src] ?? {}

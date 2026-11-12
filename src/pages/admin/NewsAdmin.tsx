@@ -127,7 +127,7 @@ export default function NewsAdmin() {
               <tr key={n.id} className="hover:bg-cream-50">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
-                    <Img src={n.image} alt="" wrapClassName="h-11 w-16 shrink-0 rounded-lg" />
+                    <Img src={n.image} alt="" sizes="80px" wrapClassName="h-11 w-16 shrink-0 rounded-lg" />
                     <p className="line-clamp-2 font-semibold text-navy-900">{L(n.title)}</p>
                   </div>
                 </td>

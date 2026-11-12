@@ -23,7 +23,7 @@ export default function ProductCard({ p, className }: { p: Product; className?: 
       className={cn('group relative flex flex-col overflow-hidden rounded-2xl border border-navy-900/5 bg-white transition-shadow duration-500 hover:shadow-lift', className)}
     >
       <Link to={`/bazaar/${p.slug}`} className="relative block">
-        <Img src={p.image} alt={L(p.name)} wrapClassName="aspect-[4/3.4]" className="transition duration-700 group-hover:scale-[1.06]" />
+        <Img src={p.image} alt={L(p.name)} sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 30vw, 50vw" wrapClassName="aspect-[4/3.4]" className="transition duration-700 group-hover:scale-[1.06]" />
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
           {off > 0 && <span className="rounded-full bg-leaf-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">{t('shop.off', { pct: off })}</span>}
           {out && <span className="rounded-full bg-navy-900 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">{t('shop.outOfStock')}</span>}

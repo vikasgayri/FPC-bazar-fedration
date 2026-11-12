@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useLockBody } from '@/hooks/useUi'
 import { cn } from '@/utils/format'
+import { imgSources } from '@/utils/images'
 
 export function Modal({
   open,
@@ -93,7 +94,7 @@ export function Lightbox({
             <ChevronLeft className="h-6 w-6" />
           </button>
           <motion.figure key={index} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="max-h-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <img src={images[index!].src} alt={images[index!].caption ?? ''} className="max-h-[80vh] w-auto rounded-xl object-contain" />
+            <img {...(() => { const o = imgSources(images[index!].src, 1600); return { src: o.src, srcSet: o.srcSet } })()} sizes="90vw" alt={images[index!].caption ?? ''} className="max-h-[80vh] w-auto rounded-xl object-contain" />
             {images[index!].caption && (
               <figcaption className="mt-4 text-center text-sm text-white/80">
                 {images[index!].caption} <span className="ml-2 text-white/40">{index! + 1} / {images.length}</span>

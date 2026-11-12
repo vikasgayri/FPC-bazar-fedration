@@ -103,7 +103,7 @@ export default function Orders() {
             <ul className="divide-y divide-navy-900/5 rounded-xl border border-navy-900/5">
               {view.lines.map((l) => (
                 <li key={l.productId} className="flex items-center gap-3 p-3">
-                  <Img src={l.image} alt="" wrapClassName="h-12 w-12 rounded-lg" />
+                  <Img src={l.image} alt="" sizes="80px" wrapClassName="h-12 w-12 rounded-lg" />
                   <p className="flex-1 text-sm font-semibold">
                     {l.name} <span className="text-ink-mute">× {l.qty}</span>
                   </p>

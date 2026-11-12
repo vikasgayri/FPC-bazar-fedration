@@ -168,7 +168,7 @@ export default function Checkout() {
                 {lines.map(({ product: p, qty }) => (
                   <li key={p.id} className="flex items-center gap-3">
                     <div className="relative">
-                      <Img src={p.image} alt="" wrapClassName="h-14 w-14 rounded-xl" />
+                      <Img src={p.image} alt="" sizes="80px" wrapClassName="h-14 w-14 rounded-xl" />
                       <span className="absolute -right-1.5 -top-1.5 grid h-5 min-w-5 place-items-center rounded-full bg-navy-900 px-1 text-[10px] font-bold text-white">{qty}</span>
                     </div>
                     <p className="line-clamp-2 flex-1 text-sm font-semibold text-navy-900">{L(p.name)}</p>

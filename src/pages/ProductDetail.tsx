@@ -50,13 +50,13 @@ export default function ProductDetail() {
         <div className="container grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <div className="overflow-hidden rounded-[1.75rem] bg-white shadow-card">
-              <Img src={gallery[img] ?? gallery[0]} alt={L(p.name)} wrapClassName="aspect-square" />
+              <Img src={gallery[img] ?? gallery[0]} alt={L(p.name)} priority sizes="(min-width: 1024px) 50vw, 100vw" wrapClassName="aspect-square" />
             </div>
             {gallery.length > 1 && (
               <div className="mt-4 flex gap-3">
                 {gallery.map((g, i) => (
                   <button key={g} onClick={() => setImg(i)} className={cn('overflow-hidden rounded-xl border-2', i === img ? 'border-navy-900' : 'border-transparent')}>
-                    <Img src={g} alt="" wrapClassName="h-20 w-20" />
+                    <Img src={g} alt="" sizes="80px" wrapClassName="h-20 w-20" />
                   </button>
                 ))}
               </div>

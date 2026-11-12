@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowRight, Check, Handshake, UserPlus } from 'lucide-react'
 import PageHero from '@/components/ui/PageHero'
 import Img from '@/components/ui/Img'
-import { Reveal, RevealImage } from '@/components/ui/Motion'
+import { Reveal } from '@/components/ui/Motion'
 import { Ornament } from '@/components/ui/Primitives'
 import { Lightbox } from '@/components/ui/Overlay'
 import { InitiativeIcon } from '@/components/ui/Brand'
@@ -27,8 +27,8 @@ export default function InitiativeDetail() {
       <PageHero
         title={L(it.title)}
         text={L(it.summary)}
-        image={it.image}
-        fallback={it.fallback}
+        image={it.hero ?? it.image}
+        fallback={it.hero ? it.image : it.fallback}
         eyebrow={it.hindiTitle}
         crumbs={[{ label: t('nav.initiatives'), to: '/initiatives' }, { label: L(groupLabel[it.group]) }]}
       >
@@ -124,12 +124,10 @@ export default function InitiativeDetail() {
             <Reveal>
               <span className="eyebrow">{t('initiatives.gallery')}</span>
             </Reveal>
-            <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+            <div className="mt-8 columns-2 gap-3 md:columns-3 lg:columns-4">
               {it.gallery.map((g, i) => (
-                <button key={g} onClick={() => setLb(i)} className={`group overflow-hidden rounded-2xl ${i === 0 ? 'col-span-2 row-span-2' : ''}`}>
-                  <RevealImage from="bottom" className="h-full">
-                    <Img src={g} alt="" wrapClassName={i === 0 ? 'h-full min-h-[300px]' : 'aspect-[4/3]'} className="transition duration-700 group-hover:scale-105" />
-                  </RevealImage>
+                <button key={g} onClick={() => setLb(i)} className="group mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl">
+                  <Img src={g} alt="" natural sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" wrapClassName="min-h-[120px] w-full" className="transition duration-700 group-hover:scale-105" />
                 </button>
               ))}
             </div>
@@ -145,7 +143,7 @@ export default function InitiativeDetail() {
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {related.map((r) => (
                 <Link key={r.slug} to={`/initiatives/${r.slug}`} className="group overflow-hidden rounded-[1.5rem] bg-white shadow-card transition hover:shadow-lift">
-                  <Img src={r.image} fallback={r.fallback} alt={L(r.title)} wrapClassName="aspect-[16/10]" className="transition duration-700 group-hover:scale-105" />
+                  <Img src={r.image} fallback={r.fallback} alt={L(r.title)} sizes="(min-width: 768px) 33vw, 100vw" wrapClassName="aspect-[16/10]" className="transition duration-700 group-hover:scale-105" />
                   <div className="p-6">
                     <p className="font-hindi text-sm text-leaf-700">{r.hindiTitle}</p>
                     <h3 className="mt-1 font-display text-xl text-navy-900">{L(r.title)}</h3>

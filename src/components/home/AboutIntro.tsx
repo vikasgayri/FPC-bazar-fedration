@@ -77,7 +77,7 @@ export default function AboutIntro() {
         <div className="relative lg:col-span-6">
           <div className="relative mx-auto max-w-xl">
             <RevealImage className="overflow-hidden rounded-[2rem] shadow-lift">
-              <Img src={stock.womenInField} fallback={real.fieldVisit} alt="Rural women in a field" wrapClassName="aspect-[4/5]" />
+              <Img src={stock.womenInField} fallback={real.fieldVisit} alt="Rural women in a field" sizes="(min-width: 1024px) 40vw, 100vw" wrapClassName="aspect-[4/5]" />
             </RevealImage>
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -86,7 +86,7 @@ export default function AboutIntro() {
               transition={{ duration: 1, delay: 0.4 }}
               className="absolute -bottom-10 -left-4 w-[52%] overflow-hidden rounded-3xl border-[6px] border-cream-50 shadow-lift sm:-left-12"
             >
-              <Img src={real.fpoTraining1} fallback={stock.farmers} alt="Farmer training session" wrapClassName="aspect-[4/3]" />
+              <Img src={real.fpoTraining1} alt="Farmer training session" sizes="(min-width: 1024px) 20vw, 50vw" wrapClassName="aspect-[4/3]" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}

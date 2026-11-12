@@ -23,7 +23,7 @@ export default function Gallery() {
 
   return (
     <>
-      <PageHero title={t('gallery.pageTitle')} text={t('gallery.pageText')} image={real.tribalFestivalStage} crumbs={[{ label: t('nav.gallery') }]} size="sm" />
+      <PageHero title={t('gallery.pageTitle')} text={t('gallery.pageText')} image={real.ngoGroup} crumbs={[{ label: t('nav.gallery') }]} size="sm" />
       <section className="bg-cream-50 py-16 sm:py-24">
         <div className="container">
           <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0">
@@ -48,7 +48,7 @@ export default function Gallery() {
                     onClick={() => setLb(i)}
                     className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl sm:mb-4"
                   >
-                    <Img src={g.image} alt={L(g.title)} wrapClassName={i % 3 === 0 ? 'aspect-[3/4]' : i % 3 === 1 ? 'aspect-[4/3]' : 'aspect-square'} className="transition duration-700 group-hover:scale-105" />
+                    <Img src={g.image} alt={L(g.title)} natural fit="cover" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" wrapClassName="min-h-[120px]" className="transition duration-700 group-hover:scale-105" />
                     <span className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-navy-950/85 via-transparent to-transparent p-4 text-left opacity-0 transition group-hover:opacity-100">
                       <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-gold-400">{g.album}</span>
                       <span className="mt-1 text-sm font-semibold text-white">{L(g.title)}</span>

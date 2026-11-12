@@ -19,7 +19,7 @@ export function PppFeature() {
       <div className="container grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <div className="relative">
           <RevealImage className="overflow-hidden rounded-[2rem]">
-            <Img src={real.polyhouseCrop} fallback={stock.greenhouse} alt="Polyhouse cultivation" wrapClassName="aspect-[5/6] sm:aspect-[4/4.4]" />
+            <Img src={real.polyhouseCrop} alt="Polyhouse cultivation" sizes="(min-width: 1024px) 45vw, 100vw" wrapClassName="aspect-[5/6] sm:aspect-[4/4.4]" />
           </RevealImage>
           <div className="absolute -bottom-8 right-4 grid grid-cols-3 gap-3 sm:right-[-2rem]">
             {[real.polyhouseVisit, real.biogasPlant, real.tribalDairyProject].map((src, i) => (
@@ -31,7 +31,7 @@ export function PppFeature() {
                 transition={{ delay: 0.3 + i * 0.12, duration: 0.8 }}
                 className="overflow-hidden rounded-2xl border-4 border-cream-50 shadow-lift"
               >
-                <Img src={src} alt="" wrapClassName="h-20 w-24 sm:h-28 sm:w-32" />
+                <Img src={src} alt="" sizes="128px" wrapClassName="h-20 w-24 sm:h-28 sm:w-32" />
               </motion.div>
             ))}
           </div>
@@ -77,7 +77,7 @@ export function OrganicModel() {
       <div className="container grid items-center gap-14 lg:grid-cols-12">
         <div className="lg:col-span-6 lg:order-2">
           <RevealImage from="right" className="relative overflow-hidden rounded-[2rem]">
-            <Img src={stock.soilHands} fallback={real.fieldVisit} alt="Healthy soil" wrapClassName="aspect-[4/3.6]" />
+            <Img src={stock.soilHands} fallback={real.fieldVisit} alt="Healthy soil" sizes="(min-width: 1024px) 50vw, 100vw" wrapClassName="aspect-[4/3.6]" />
             <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/90 p-5 backdrop-blur-md">
               <div className="grid grid-cols-3 divide-x divide-navy-900/10 text-center">
                 {it.highlights.map((h, i) => (
@@ -160,7 +160,7 @@ export function ClusterCentre() {
             <div className="relative mx-auto aspect-square max-w-md">
               <div className="absolute inset-0 animate-[spin_60s_linear_infinite] rounded-full border border-dashed border-gold-500/30" />
               <div className="absolute inset-6 overflow-hidden rounded-full border-4 border-gold-500/40">
-                <Img src={stock.wheatField} fallback={real.fpoVisit} alt="Agribusiness cluster" wrapClassName="h-full w-full" />
+                <Img src={stock.wheatField} fallback={real.fpoVisit} alt="Agribusiness cluster" sizes="448px" wrapClassName="h-full w-full" />
               </div>
               <div className="absolute inset-x-0 -bottom-2 mx-auto w-max rounded-full bg-gold-500 px-5 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-navy-950 shadow-lift">
                 Agribusiness Cluster Centre
@@ -193,7 +193,7 @@ export function ChairmanQuote() {
         <Reveal className="lg:col-span-4">
           <div className="relative mx-auto w-64 sm:w-72">
             <div className="absolute -inset-3 rounded-[2rem] border border-gold-500/40" />
-            <Img src={chairman.photo!} alt={chairman.name} wrapClassName="aspect-[4/5] rounded-[1.6rem]" className="object-top" />
+            <Img src={chairman.photo!} alt={chairman.name} sizes="288px" wrapClassName="aspect-[4/5] rounded-[1.6rem] bg-white" />
             <div className="absolute -bottom-5 left-1/2 w-max -translate-x-1/2 rounded-full bg-navy-900 px-5 py-2 text-center text-white shadow-lift">
               <p className="font-display text-base">{chairman.name}</p>
             </div>

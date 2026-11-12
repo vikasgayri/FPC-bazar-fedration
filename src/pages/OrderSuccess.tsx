@@ -56,7 +56,7 @@ export default function OrderSuccess() {
               <ul className="mt-6 divide-y divide-navy-900/5">
                 {o.lines.map((l) => (
                   <li key={l.productId} className="flex items-center gap-4 py-3">
-                    <Img src={l.image} alt="" wrapClassName="h-14 w-14 rounded-xl" />
+                    <Img src={l.image} alt="" sizes="80px" wrapClassName="h-14 w-14 rounded-xl" />
                     <p className="flex-1 text-sm font-semibold text-navy-900">
                       {l.name} <span className="text-ink-mute">× {l.qty}</span>
                     </p>

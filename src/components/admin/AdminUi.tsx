@@ -65,7 +65,7 @@ export function ImageField({ value, onChange, label = 'Image' }: { value: string
     <div>
       <p className="field-label">{label}</p>
       <div className="flex gap-4">
-        <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-navy-900/10 bg-cream-100">{value ? <Img src={value} alt="" wrapClassName="h-full w-full" /> : <ImagePlus className="m-auto mt-8 h-7 w-7 text-ink-mute" />}</div>
+        <div className="h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-navy-900/10 bg-cream-100">{value ? <Img src={value} alt="" sizes="96px" wrapClassName="h-full w-full" /> : <ImagePlus className="m-auto mt-8 h-7 w-7 text-ink-mute" />}</div>
         <div className="min-w-0 flex-1 space-y-2">
           <input value={value.startsWith('data:') ? '(uploaded file — stored in this browser)' : value} onChange={(e) => onChange(e.target.value)} placeholder="https://… or /images/real/…" className="field !py-2.5" />
           <div className="flex flex-wrap gap-2">
@@ -106,7 +106,7 @@ export function ImageField({ value, onChange, label = 'Image' }: { value: string
               }}
               className={cn('overflow-hidden rounded-lg border-2', value === src ? 'border-navy-900' : 'border-transparent')}
             >
-              <Img src={src} alt="" wrapClassName="aspect-square" />
+              <Img src={src} alt="" sizes="120px" wrapClassName="aspect-square" />
             </button>
           ))}
         </div>

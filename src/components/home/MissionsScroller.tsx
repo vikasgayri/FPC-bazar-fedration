@@ -56,7 +56,7 @@ export default function MissionsScroller() {
             >
               <Link to={`/initiatives/${it.slug}`} className="group block">
                 <div className="relative overflow-hidden rounded-[1.5rem]">
-                  <Img src={it.image} fallback={it.fallback} alt={L(it.title)} wrapClassName="aspect-[4/3]" className="transition duration-[1.2s] group-hover:scale-110" />
+                  <Img src={it.image} fallback={it.fallback} alt={L(it.title)} sizes="(min-width: 640px) 380px, 82vw" wrapClassName="aspect-[4/3]" className="transition duration-[1.2s] group-hover:scale-110" />
                   <span className="absolute left-4 top-4 rounded-full bg-navy-950/70 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-gold-300 backdrop-blur">
                     {L(groupLabel[it.group])}
                   </span>

@@ -7,6 +7,7 @@ import { goals, org } from '@/data/site'
 import { useLang } from '@/hooks/useLang'
 import { useCountUp } from '@/hooks/useUi'
 import { cn } from '@/utils/format'
+import { imgSources } from '@/utils/images'
 
 const DURATION = 7000
 const captions = [
@@ -16,11 +17,16 @@ const captions = [
   { en: 'Natural, chemical-free farming', hi: 'प्राकृतिक, जहर मुक्त खेती' },
 ]
 
-function Slide({ src, fallback, focus }: { src: string; fallback: string; focus: string }) {
+function Slide({ src, fallback, focus, first }: { src: string; fallback: string; focus: string; first?: boolean }) {
   const [s, setS] = useState(src)
+  const o = imgSources(s, 1600)
   return (
     <img
-      src={s}
+      src={o.src}
+      srcSet={o.srcSet}
+      sizes="100vw"
+      fetchPriority={first ? 'high' : 'auto'}
+      decoding="async"
       onError={() => s !== fallback && setS(fallback)}
       alt=""
       // Focal point drives both the crop and the Ken Burns zoom origin, so the subject stays framed on wide screens.
@@ -67,6 +73,16 @@ export default function Hero() {
     return () => clearTimeout(id)
   }, [idx])
 
+  // Warm the cache for the next slide so the cross-fade never shows an empty frame.
+  useEffect(() => {
+    const next = heroSlides[(idx + 1) % heroSlides.length]
+    const o = imgSources(next.src, 1600)
+    const im = new Image()
+    im.sizes = '100vw'
+    if (o.srcSet) im.srcset = o.srcSet
+    im.src = o.src
+  }, [idx])
+
   const lines = [t('home.heroTitle1'), t('home.heroTitle2'), t('home.heroTitle3')]
 
   return (
@@ -75,7 +91,7 @@ export default function Hero() {
       <div className="absolute inset-0 -z-20">
         <AnimatePresence mode="sync">
           <motion.div key={idx} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.4 }}>
-            <Slide src={heroSlides[idx].src} fallback={heroSlides[idx].fallback} focus={heroSlides[idx].focus} />
+            <Slide src={heroSlides[idx].src} fallback={heroSlides[idx].fallback} focus={heroSlides[idx].focus} first={idx === 0} />
           </motion.div>
         </AnimatePresence>
       </div>

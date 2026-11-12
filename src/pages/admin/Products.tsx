@@ -170,7 +170,7 @@ export default function Products() {
               <tr key={p.id} className="hover:bg-cream-50">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
-                    <Img src={p.image} alt="" wrapClassName="h-11 w-11 shrink-0 rounded-lg" />
+                    <Img src={p.image} alt="" sizes="80px" wrapClassName="h-11 w-11 shrink-0 rounded-lg" />
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-navy-900">{L(p.name)}</p>
                       <p className="truncate text-xs text-ink-mute">{p.producer}</p>

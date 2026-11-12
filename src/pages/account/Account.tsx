@@ -93,7 +93,7 @@ export default function Account() {
                       )}
                       <div className="mt-5 flex -space-x-3">
                         {o.lines.map((l) => (
-                          <Img key={l.productId} src={l.image} alt={l.name} wrapClassName="h-12 w-12 rounded-full border-2 border-white" />
+                          <Img key={l.productId} src={l.image} alt={l.name} sizes="48px" wrapClassName="h-12 w-12 rounded-full border-2 border-white" />
                         ))}
                       </div>
                     </article>

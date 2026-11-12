@@ -61,7 +61,7 @@ export default function Initiatives() {
                     className={cn('group grid overflow-hidden rounded-[1.75rem] bg-white shadow-card transition hover:shadow-lift md:grid-cols-2', i % 2 === 1 && 'md:[&>*:first-child]:order-2')}
                   >
                     <div className="relative min-h-[260px] overflow-hidden">
-                      <Img src={it.image} fallback={it.fallback} alt={L(it.title)} wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-105" />
+                      <Img src={it.image} fallback={it.fallback} alt={L(it.title)} sizes="(min-width: 768px) 50vw, 100vw" wrapClassName="absolute inset-0" className="transition duration-[1.2s] group-hover:scale-105" />
                       <span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-navy-900 backdrop-blur">
                         {L(groupLabel[it.group])}
                       </span>

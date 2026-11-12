@@ -40,7 +40,7 @@ export default function News() {
                 <Reveal key={n.id} delay={(i % 3) * 0.07}>
                   <Link to={`/news/${n.slug}`} className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] bg-white shadow-card transition hover:-translate-y-1 hover:shadow-lift">
                     <div className="relative">
-                      <Img src={n.image} alt={L(n.title)} wrapClassName="aspect-[16/10]" className="transition duration-700 group-hover:scale-105" />
+                      <Img src={n.image} alt={L(n.title)} sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" wrapClassName="aspect-[16/10]" className="transition duration-700 group-hover:scale-105" />
                       <span className="absolute left-4 top-4 rounded-full bg-gold-500 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-navy-950">{n.category}</span>
                     </div>
                     <div className="flex flex-1 flex-col p-6">

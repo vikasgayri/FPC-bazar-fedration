@@ -31,6 +31,8 @@ export interface Initiative {
   stats?: { value: string; label: LText }[]
   image: string
   fallback: string
+  /** High-resolution banner for the detail page (used when `image` is a small field photo). */
+  hero?: string
   gallery: string[]
 }
 
@@ -63,7 +65,8 @@ export const initiatives: Initiative[] = [
       { en: 'Biogas & organic fertilizer revenue models', hi: 'बायोगैस व जैविक खाद से आय मॉडल' },
     ],
     image: real.gaushalaCattle,
-    fallback: stock.cowsPen,
+    hero: stock.cowCalf,
+    fallback: real.gaushalaProjects,
     gallery: [real.gaushalaProjects, real.cowShedDesign, real.cattleVisit, real.gaushalaCattle],
   },
   {
@@ -94,6 +97,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.cowCalf,
     fallback: real.cattleVisit,
+    hero: stock.cowsPen,
     gallery: [real.tribalDairyProject, real.cattleVisit, real.processingPlant],
   },
   {
@@ -153,7 +157,8 @@ export const initiatives: Initiative[] = [
       { en: 'Financial literacy & credit linkage', hi: 'वित्तीय साक्षरता एवं ऋण जुड़ाव' },
     ],
     image: real.shgHandicraft,
-    fallback: stock.villageWomen,
+    hero: stock.villageWomen,
+    fallback: real.shgJuteBags,
     gallery: [real.shgHandicraft, real.shgArtisan, real.shgJuteBaskets, real.shgJuteBags, real.shgProductsStall, real.shgStall2, real.shgEventStall],
   },
   {
@@ -236,6 +241,7 @@ export const initiatives: Initiative[] = [
     ],
     image: real.polyhouseCrop,
     fallback: stock.greenhouse,
+    hero: stock.greenhouse,
     gallery: [real.polyhouseVisit, real.polyhouseCrop, real.polyhouseTomatoes, real.biogasPlant, real.tribalDairyProject],
   },
   {
@@ -260,7 +266,8 @@ export const initiatives: Initiative[] = [
       { en: 'Market support & fair buyback assurance', hi: 'बाज़ार सहायता एवं उचित बायबैक आश्वासन' },
     ],
     image: real.tribalFestival,
-    fallback: stock.village,
+    hero: stock.village,
+    fallback: real.tribalFestivalStage,
     gallery: [real.tribalFestival, real.tribalSchemePoster, real.tribalFestivalStage, real.tribalDairyProject],
   },
   {
@@ -289,8 +296,9 @@ export const initiatives: Initiative[] = [
       { value: '10,000', label: { en: 'Youth employment target', hi: 'युवा रोजगार लक्ष्य' } },
       { value: '1,000', label: { en: 'Partner FPOs', hi: 'साझेदार FPO' } },
     ],
-    image: real.droneDemo,
-    fallback: stock.farmers,
+    image: real.trainingCertificates,
+    hero: real.fpoTraining1,
+    fallback: real.agriDrone,
     gallery: [real.startupTraining, real.agriDrone, real.droneDemo, real.trainingCertificates, real.fpoTraining2],
   },
 
@@ -455,7 +463,8 @@ export const initiatives: Initiative[] = [
       { value: '4 States', label: { en: 'Initial target region', hi: 'प्रारंभिक लक्षित राज्य' } },
     ],
     image: real.biogasPlant,
-    fallback: stock.cowsPen,
+    hero: stock.cowsPen,
+    fallback: real.biogasUnit,
     gallery: [real.biogasPlant, real.biogasUnit, real.biogasBalloon, real.gaushalaProjects],
   },
 ]

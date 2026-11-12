@@ -199,7 +199,7 @@ export default function Header() {
                     </div>
                   ))}
                   <Link to="/initiatives" className="group relative col-span-3 overflow-hidden rounded-2xl">
-                    <Img src={real.fpoTraining2} alt="" wrapClassName="absolute inset-0" className="transition duration-700 group-hover:scale-105" overlay />
+                    <Img src={real.fpoTraining2} alt="" sizes="25vw" wrapClassName="absolute inset-0" className="transition duration-700 group-hover:scale-105" overlay />
                     <div className="relative flex h-full min-h-[280px] flex-col justify-end p-6 text-white">
                       <p className="font-hindi text-gold-400">जहर मुक्त कृषि • स्वस्थ भारत</p>
                       <p className="mt-2 font-display text-2xl leading-tight">{t('initiatives.pageTitle')}</p>
