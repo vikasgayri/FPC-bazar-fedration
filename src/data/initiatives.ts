@@ -124,7 +124,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.vegMarket,
     fallback: real.produceExhibit,
-    gallery: [real.produceExhibit, real.fpoProducts, real.federationPavilion, real.fpoStall],
+    gallery: [real.produceExhibit, real.fpoProductTasting, real.organicFarmersExpo, real.fpoProducts, real.federationPavilion, real.fpoStall, real.expoDiscussion],
   },
   {
     slug: 'women-shg-employment',
@@ -154,7 +154,7 @@ export const initiatives: Initiative[] = [
     ],
     image: real.shgHandicraft,
     fallback: stock.villageWomen,
-    gallery: [real.shgHandicraft, real.shgJuteBags, real.shgProductsStall, real.shgStall2],
+    gallery: [real.shgHandicraft, real.shgArtisan, real.shgJuteBaskets, real.shgJuteBags, real.shgProductsStall, real.shgStall2, real.shgEventStall],
   },
   {
     slug: 'healthy-india-organic-food',
@@ -179,7 +179,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.vegBaskets,
     fallback: real.organicPavilion,
-    gallery: [real.organicPavilion, real.organicExpo, real.produceExhibit],
+    gallery: [real.organicPavilion, real.organicFarmersExpo, real.organicExpo, real.fpoProductTasting, real.produceExhibit],
   },
   {
     slug: 'chemical-free-farming',
@@ -204,7 +204,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.soilHands,
     fallback: real.fieldVisit,
-    gallery: [real.fieldVisit, real.fpoTraining1, real.farmerMeeting],
+    gallery: [real.fieldVisit, real.fpoTraining1, real.farmerMeeting, real.projectSiteVisit, real.fpoMemberVisit],
   },
 
   // ───────────── Special initiatives ─────────────
@@ -236,7 +236,7 @@ export const initiatives: Initiative[] = [
     ],
     image: real.polyhouseCrop,
     fallback: stock.greenhouse,
-    gallery: [real.polyhouseVisit, real.polyhouseCrop, real.biogasPlant, real.tribalDairyProject],
+    gallery: [real.polyhouseVisit, real.polyhouseCrop, real.polyhouseTomatoes, real.biogasPlant, real.tribalDairyProject],
   },
   {
     slug: 'tribal-self-reliance',
@@ -261,7 +261,7 @@ export const initiatives: Initiative[] = [
     ],
     image: real.tribalFestival,
     fallback: stock.village,
-    gallery: [real.tribalFestival, real.tribalFestivalStage, real.tribalDairyProject],
+    gallery: [real.tribalFestival, real.tribalSchemePoster, real.tribalFestivalStage, real.tribalDairyProject],
   },
   {
     slug: 'youth-employment',
@@ -291,7 +291,7 @@ export const initiatives: Initiative[] = [
     ],
     image: real.droneDemo,
     fallback: stock.farmers,
-    gallery: [real.agriDrone, real.droneDemo, real.fpoTraining2],
+    gallery: [real.startupTraining, real.agriDrone, real.droneDemo, real.trainingCertificates, real.fpoTraining2],
   },
 
   // ───────────── Flagship projects ─────────────
@@ -326,7 +326,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.wheatField,
     fallback: real.fpoVisit,
-    gallery: [real.processingPlant, real.fpoVisit, real.fpoTraining1],
+    gallery: [real.processingPlant, real.productProcessing, real.fpoCentreVisit, real.fpoVisit, real.projectPresentation],
   },
   {
     slug: 'gaushala-organic-fertilizer',
@@ -355,9 +355,9 @@ export const initiatives: Initiative[] = [
       { title: { en: 'Aerobic Activation', hi: 'एरोबिक सक्रियण' }, text: { en: 'Aeration and compost activation.', hi: 'वायु संचार एवं कम्पोस्ट सक्रियण।' } },
       { title: { en: 'Organic Fertilizer', hi: 'जैविक खाद उत्पादन' }, text: { en: 'Quality-tested and packed into bio-fertilizer bags.', hi: 'गुणवत्ता जांच के बाद बैग में पैकिंग।' } },
     ],
-    image: real.newsAmulLaunch,
-    fallback: stock.soilHands2,
-    gallery: [real.newsAmulLaunch, real.newsOrganicFertilizer, real.organicPavilion, real.partnerMeet],
+    image: stock.soilHands2,
+    fallback: real.organicProductLaunch,
+    gallery: [real.newsAmulLaunch, real.organicProductLaunch, real.organicPartnerHandover, real.newsOrganicFertilizer, real.organicPavilion, real.partnerMeet],
   },
   {
     slug: 'e-auto-fresh-delivery',
@@ -390,7 +390,7 @@ export const initiatives: Initiative[] = [
     ],
     image: stock.freshProduce,
     fallback: real.produceExhibit,
-    gallery: [real.produceExhibit, real.fpoProducts],
+    gallery: [real.produceExhibit, real.fpoProductTasting, real.fpoProducts],
   },
   {
     slug: 'enzybiotic-power-pro',

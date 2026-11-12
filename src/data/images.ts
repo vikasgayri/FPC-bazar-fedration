@@ -67,6 +67,33 @@ export const real = {
   gaushalaProjects: r('gaushala-projects'),
   gaushalaCattle: r('gaushala-cattle'),
   delegation: r('delegation'),
+  // Added from the company profile (Jun 2025)
+  ngoAward4: r('ngo-day-award-4'),
+  ngoAward5: r('ngo-day-award-5'),
+  ngoAward6: r('ngo-day-award-6'),
+  shgEventStall: r('shg-event-stall'),
+  productProcessing: r('product-processing'),
+  organicPartnerHandover: r('organic-partner-handover'),
+  partnerMeetingOffice: r('partner-meeting-office'),
+  fpoMemberVisit: r('fpo-member-visit'),
+  fpoProductTasting: r('fpo-product-tasting'),
+  polyhouseTomatoes: r('polyhouse-tomatoes'),
+  tribalSchemePoster: r('tribal-festival-scheme-poster'),
+  amcslMeeting: r('amcsl-meeting'),
+  organicFarmersExpo: r('organic-farmers-expo'),
+  shgJuteBaskets: r('shg-jute-baskets'),
+  mouSigning: r('mou-signing'),
+  expoStageEvent: r('expo-stage-event'),
+  trainingCertificates: r('training-certificates'),
+  organicProductLaunch: r('organic-product-launch'),
+  projectSiteVisit: r('project-site-visit'),
+  shgArtisan: r('shg-handicraft-artisan'),
+  expoDelegation: r('expo-delegation'),
+  startupTraining: r('startup-training'),
+  expoDiscussion: r('expo-discussion'),
+  fpoCentreVisit: r('fpo-centre-visit'),
+  projectPresentation: r('project-presentation'),
+  digitalIndiaExpo: r('digital-india-expo'),
 }
 
 export const stock = {
@@ -124,6 +151,26 @@ export const team = {
   mittalShah: '/images/team/mittal-shah.jpg',
   nileshPatel: '/images/team/nilesh-patel.jpg',
   rajendraJi: '/images/team/rajendra-ji.jpg',
+  sourabhSindhi: '/images/team/sourabh-sindhi.jpg',
+}
+
+/** Advisory committee portraits (cropped from the company profile, pages 12–13). */
+const a = (name: string) => `/images/advisory/${name}.jpg`
+export const advisoryPhotos = {
+  sunilShastri: a('sunil-shastri'),
+  rahulDwivedi: a('rahul-dwivedi'),
+  sarikaChoudhary: a('sarika-choudhary'),
+  mkVajpayee: a('mk-vajpayee'),
+  kishanPanchal: a('kishan-panchal'),
+  yusufPathan: a('yusuf-pathan'),
+  shaileshDadhich: a('shailesh-dadhich'),
+  nGanesan: a('n-ganesan'),
+  shankerSinghRawat: a('shanker-singh-rawat'),
+  mohinderGill: a('mohinder-gill'),
+  apurvaDesai: a('apurva-desai'),
+  devanjanBose: a('devanjan-bose'),
+  nareshKumar: a('naresh-kumar'),
+  sanjaySuthar: a('sanjay-suthar'),
 }
 
 /**

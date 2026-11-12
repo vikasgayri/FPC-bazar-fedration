@@ -141,7 +141,11 @@ export default function About() {
             <div className="grid gap-3 sm:grid-cols-2 lg:col-span-8">
               {advisory.map((a, i) => (
                 <Reveal key={a.name} delay={(i % 6) * 0.04} className="flex items-center gap-4 rounded-2xl border border-navy-900/5 bg-cream-50 p-4 transition hover:border-gold-500/40 hover:bg-white hover:shadow-card">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-navy-900 font-display text-sm text-gold-400">{initials(a.name)}</span>
+                  {a.photo ? (
+                    <Img src={a.photo} alt={a.name} wrapClassName="h-14 w-14 shrink-0 rounded-full ring-2 ring-gold-500/40" className="object-top" />
+                  ) : (
+                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-navy-900 font-display text-sm text-gold-400">{initials(a.name)}</span>
+                  )}
                   <div className="min-w-0">
                     <p className="font-display text-[1.05rem] text-navy-900">{a.name}</p>
                     <p className="text-xs text-ink-mute">{a.role}</p>

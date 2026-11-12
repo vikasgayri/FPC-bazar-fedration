@@ -1,5 +1,5 @@
 import type { LText } from '@/types'
-import { team } from './images'
+import { advisoryPhotos as ap, team } from './images'
 
 /** Organisation facts — sourced from the client's proposal (2025) and company profile (Jun 2025). */
 export const org = {
@@ -137,6 +137,7 @@ export const leadership: Leader[] = [
     name: 'Sourabh Sindhi',
     role: { en: 'Chief Financial Officer', hi: 'मुख्य वित्तीय अधिकारी' },
     credential: { en: 'Director & founding subscriber', hi: 'निदेशक एवं संस्थापक सदस्य' },
+    photo: team.sourabhSindhi,
   },
   {
     name: 'Mittal Shah',
@@ -156,21 +157,21 @@ export const leadership: Leader[] = [
   },
 ]
 
-export const advisory: { name: string; role: string }[] = [
-  { name: 'Sunil Shastri', role: 'S/o Lal Bahadur Shastri' },
-  { name: 'Rahul Dwivedi', role: 'Director, MoEFCC' },
-  { name: 'Sarika Choudhary', role: 'Media Panelist' },
-  { name: 'Prof. M. K. Vajpayee', role: 'Roma University' },
-  { name: 'Kishan Ji Panchal', role: 'Agriculture Scientist' },
-  { name: 'Yusuf Pathan', role: 'Ex Chief Engineer, GIDC Gujarat' },
-  { name: 'Shailesh Dadhich', role: 'Management Board Head' },
-  { name: 'N. Ganesan', role: 'Director – Technical, Richplus Bio Fertilizers & Feeds' },
-  { name: 'Shanker Singh Rawat', role: 'Secretary, GMVSS' },
-  { name: 'Mohinder Gill', role: 'Advocate, Allahabad & Delhi High Court — Legal Advisor' },
-  { name: 'Apurva Desai', role: 'International Marketing Expert' },
-  { name: 'Devanjan Bose', role: 'Agriculture, Technology, Marketing & Management Consultant' },
-  { name: 'Dr. Naresh Kumar', role: 'Ex HR, Medanta Hospital' },
-  { name: 'Sanjay Suthar', role: 'Field Marketing' },
+export const advisory: { name: string; role: string; photo?: string }[] = [
+  { name: 'Sunil Shastri', role: 'S/o Lal Bahadur Shastri', photo: ap.sunilShastri },
+  { name: 'Rahul Dwivedi', role: 'Director, MoEFCC', photo: ap.rahulDwivedi },
+  { name: 'Sarika Choudhary', role: 'Media Panelist', photo: ap.sarikaChoudhary },
+  { name: 'Prof. M. K. Vajpayee', role: 'Roma University', photo: ap.mkVajpayee },
+  { name: 'Kishan Ji Panchal', role: 'Agriculture Scientist', photo: ap.kishanPanchal },
+  { name: 'Yusuf Pathan', role: 'Ex Chief Engineer, GIDC Gujarat', photo: ap.yusufPathan },
+  { name: 'Shailesh Dadhich', role: 'Management Board Head', photo: ap.shaileshDadhich },
+  { name: 'N. Ganesan', role: 'Director – Technical, Richplus Bio Fertilizers & Feeds', photo: ap.nGanesan },
+  { name: 'Shanker Singh Rawat', role: 'Secretary, GMVSS', photo: ap.shankerSinghRawat },
+  { name: 'Mohinder Gill', role: 'Advocate, Allahabad & Delhi High Court — Legal Advisor', photo: ap.mohinderGill },
+  { name: 'Apurva Desai', role: 'International Marketing Expert', photo: ap.apurvaDesai },
+  { name: 'Devanjan Bose', role: 'Agriculture, Technology, Marketing & Management Consultant', photo: ap.devanjanBose },
+  { name: 'Dr. Naresh Kumar', role: 'Ex HR, Medanta Hospital', photo: ap.nareshKumar },
+  { name: 'Sanjay Suthar', role: 'Field Marketing', photo: ap.sanjaySuthar },
 ]
 
 /** Collaborators named in the proposal / profile. Text wordmarks only (no third-party logos). */

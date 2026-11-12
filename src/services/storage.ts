@@ -3,6 +3,23 @@
  * Components and contexts must go through service functions.
  */
 const PREFIX = 'fpcbf_demo_v1:'
+/**
+ * Bump when seed data (products, news, gallery…) changes so existing browsers pick up
+ * the new content instead of their stale localStorage copy. Demo data is reset once.
+ */
+const SEED_VERSION = 2
+
+try {
+  const VERSION_KEY = PREFIX + '__seed_version'
+  if (localStorage.getItem(VERSION_KEY) !== String(SEED_VERSION)) {
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith(PREFIX) && !k.endsWith(':lang') && !k.endsWith(':session') && !k.endsWith(':admin_session'))
+      .forEach((k) => localStorage.removeItem(k))
+    localStorage.setItem(VERSION_KEY, String(SEED_VERSION))
+  }
+} catch {
+  /* storage unavailable — nothing to migrate */
+}
 
 export const demoStore = {
   get<T>(key: string, fallback: T): T {
