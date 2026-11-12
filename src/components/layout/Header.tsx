@@ -62,7 +62,7 @@ export default function Header() {
       <header className="fixed inset-x-0 top-0 z-50" onMouseLeave={() => setOpen(null)}>
         {/* Utility bar */}
         <div className={cn('hidden overflow-hidden bg-navy-950 text-white/75 transition-all duration-500 lg:block', scrolled ? 'max-h-0' : 'max-h-10')}>
-          <div className="container flex h-10 items-center justify-between text-[12px]">
+          <div className="container-wide flex h-10 items-center justify-between text-[12px]">
             <div className="flex items-center gap-6">
               <a href={`tel:${org.phones[0].replace(/\s/g, '')}`} className="flex items-center gap-2 hover:text-white">
                 <Phone className="h-3.5 w-3.5 text-gold-400" /> {t('top.helpline')}: {org.phones[0]}
@@ -72,7 +72,7 @@ export default function Header() {
               </a>
             </div>
             <div className="flex items-center gap-5">
-              <span className="flex items-center gap-2">
+              <span className="hidden items-center gap-2 xl:flex">
                 <ShieldCheck className="h-3.5 w-3.5 text-gold-400" /> {t('top.registered')}
               </span>
               <Link to="/partner" className="hover:text-white">
@@ -93,7 +93,7 @@ export default function Header() {
             solid ? 'bg-white/95 shadow-[0_8px_30px_-12px_rgba(11,37,69,0.25)] backdrop-blur-xl' : 'bg-gradient-to-b from-navy-950/70 to-transparent',
           )}
         >
-          <div className={cn('container flex items-center justify-between gap-2 transition-all duration-500 sm:gap-6', scrolled ? 'h-[76px]' : 'h-[92px]')}>
+          <div className={cn('container-wide flex items-center justify-between gap-2 transition-all duration-500 sm:gap-6', scrolled ? 'h-[76px]' : 'h-[92px]')}>
             <Logo light={!solid} compact={scrolled} />
 
             <nav className="hidden items-center xl:flex" aria-label="Primary">

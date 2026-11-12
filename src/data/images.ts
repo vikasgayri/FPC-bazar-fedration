@@ -126,10 +126,14 @@ export const team = {
   rajendraJi: '/images/team/rajendra-ji.jpg',
 }
 
-/** Hero slideshow — swap freely. `fallback` is used if the primary URL fails. */
+/**
+ * Hero slideshow — swap freely. `fallback` is used if the primary URL fails.
+ * `focus` is the CSS object-position focal point (x y). Keep the subject slightly right of centre
+ * so it fills the right half of the hero while the headline sits on the left.
+ */
 export const heroSlides = [
-  { src: stock.womenInField, fallback: real.fieldVisit },
-  { src: stock.cowCalf, fallback: real.gaushalaCattle },
-  { src: stock.greenhouse, fallback: real.polyhouseCrop },
-  { src: stock.oxenPlough, fallback: real.fpoTraining2 },
+  { src: stock.womenInField, fallback: real.fieldVisit, focus: '62% 38%' },
+  { src: stock.cowCalf, fallback: real.gaushalaCattle, focus: '58% 55%' },
+  { src: stock.greenhouse, fallback: real.polyhouseCrop, focus: '50% 45%' },
+  { src: stock.oxenPlough, fallback: real.fpoTraining2, focus: '60% 50%' },
 ]

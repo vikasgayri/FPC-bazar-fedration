@@ -16,13 +16,15 @@ const captions = [
   { en: 'Natural, chemical-free farming', hi: 'प्राकृतिक, जहर मुक्त खेती' },
 ]
 
-function Slide({ src, fallback }: { src: string; fallback: string }) {
+function Slide({ src, fallback, focus }: { src: string; fallback: string; focus: string }) {
   const [s, setS] = useState(src)
   return (
     <img
       src={s}
       onError={() => s !== fallback && setS(fallback)}
       alt=""
+      // Focal point drives both the crop and the Ken Burns zoom origin, so the subject stays framed on wide screens.
+      style={{ objectPosition: focus, transformOrigin: focus }}
       className="h-full w-full animate-kenburns object-cover"
       loading="eager"
     />
@@ -38,9 +40,10 @@ function Stat({ g, i }: { g: (typeof goals)[number]; i: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1 + i * 0.12, duration: 0.8 }}
       className={cn(
-        'relative border-white/10 px-4 py-6 sm:px-8',
-        i % 2 === 1 && 'border-l',
-        i === 2 && 'lg:border-l',
+        // First cell of each row starts flush with the headline's left edge.
+        'relative border-white/10 py-6 pr-4 sm:pr-8',
+        i % 2 === 1 ? 'border-l pl-4 sm:pl-8' : 'pl-0',
+        i === 2 && 'lg:border-l lg:pl-8',
         i >= 2 && 'border-t lg:border-t-0',
       )}
     >
@@ -72,25 +75,25 @@ export default function Hero() {
       <div className="absolute inset-0 -z-20">
         <AnimatePresence mode="sync">
           <motion.div key={idx} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.4 }}>
-            <Slide src={heroSlides[idx].src} fallback={heroSlides[idx].fallback} />
+            <Slide src={heroSlides[idx].src} fallback={heroSlides[idx].fallback} focus={heroSlides[idx].focus} />
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950/95 via-navy-950/70 to-navy-950/10" />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(6,22,44,0.94)_0%,rgba(6,22,44,0.82)_28%,rgba(6,22,44,0.5)_52%,rgba(6,22,44,0.18)_78%,rgba(6,22,44,0.08)_100%)]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-navy-950 via-transparent to-navy-950/40" />
       <div className="absolute inset-0 -z-10 bg-grain opacity-70" />
 
       {/* Vertical motto */}
-      <div className="pointer-events-none absolute right-6 top-1/2 hidden -translate-y-1/2 xl:block">
+      <div className="pointer-events-none absolute right-[clamp(1rem,2vw,2.5rem)] top-1/2 hidden -translate-y-1/2 xl:block">
         <p className="font-hindi text-sm tracking-[0.3em] text-white/50 [writing-mode:vertical-rl]">{org.motto.hi}</p>
       </div>
 
-      <div className="container flex flex-1 flex-col justify-center pb-12 pt-40 lg:pt-44">
-        <div className="max-w-3xl">
+      <div className="container-wide flex flex-1 flex-col justify-center pb-12 pt-36 sm:pt-40 lg:pt-44">
+        <div className="w-full max-w-[min(100%,58rem)] xl:max-w-[62%] 2xl:max-w-[60%]">
           <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="eyebrow eyebrow-light">
             {t('home.heroEyebrow')}
           </motion.p>
-          <h1 className="mt-6 font-display text-[2.7rem] font-medium leading-[1.02] tracking-[-0.025em] text-white sm:text-[4rem] lg:text-[5.2rem]">
+          <h1 className="mt-6 font-display text-[clamp(2.35rem,5.4vw,6.4rem)] font-medium leading-[1.02] tracking-[-0.025em] text-white">
             {lines.map((l, i) => (
               <span key={i} className="block overflow-hidden pb-1">
                 <motion.span
@@ -104,7 +107,7 @@ export default function Hero() {
               </span>
             ))}
           </h1>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.6 }} className="mt-7 max-w-xl text-[1.05rem] leading-relaxed text-white/75 sm:text-lg">
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.6 }} className="mt-7 max-w-[42rem] text-[clamp(1.02rem,1.15vw,1.25rem)] leading-relaxed text-white/80">
             {t('home.heroText')}
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.75 }} className="mt-10 flex flex-wrap gap-3">
@@ -140,7 +143,7 @@ export default function Hero() {
 
       {/* Goals band */}
       <div className="relative border-t border-white/10 bg-navy-950/60 backdrop-blur-md">
-        <div className="container">
+        <div className="container-wide">
           <div className="grid grid-cols-2 lg:grid-cols-4">
             {goals.map((g, i) => (
               <Stat key={i} g={g} i={i} />

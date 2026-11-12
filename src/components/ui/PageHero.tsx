@@ -30,7 +30,7 @@ export default function PageHero({
       <Img src={image} fallback={fallback} alt="" loading="eager" wrapClassName="absolute inset-0 -z-10" className="scale-105 opacity-60" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy-950 via-navy-950/85 to-navy-950/30" />
       <div className="absolute inset-0 -z-10 bg-grain opacity-60" />
-      <div className={`container ${size === 'sm' ? 'pb-14 pt-36 sm:pt-40' : 'pb-20 pt-40 sm:pb-24 sm:pt-48'}`}>
+      <div className={`container-wide ${size === 'sm' ? 'pb-14 pt-36 sm:pt-40' : 'pb-20 pt-40 sm:pb-24 sm:pt-48'}`}>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }} className="max-w-3xl">
           <Breadcrumb items={[{ label: t('nav.home'), to: '/' }, ...crumbs]} />
           {eyebrow && <p className="mt-6 font-hindi text-lg text-gold-400">{eyebrow}</p>}
