@@ -86,7 +86,7 @@ export const seedNews = (): NewsItem[] => [
     image: real.federationPavilion,
     date: day('2025-01-18'),
     published: true,
-    title: { en: 'FPC Bazaar Federation pavilion at agri exhibition', hi: 'कृषि प्रदर्शनी में एफपीसी बाज़ार फेडरेशन पवेलियन' },
+    title: { en: 'FPC Bazaar Federation pavilion at agri exhibition', hi: 'कृषि प्रदर्शनी में एफपीसी बाजार फेडरेशन पवेलियन' },
     excerpt: {
       en: 'Member FPOs and SHGs displayed organic produce, dairy and gaushala products to buyers and visitors.',
       hi: 'सदस्य FPO और SHG ने जैविक उपज, डेयरी व गौशाला उत्पाद प्रदर्शित किए।',

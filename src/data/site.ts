@@ -5,7 +5,7 @@ import { team } from './images'
 export const org = {
   name: 'FPC Bazaar Federation',
   legalName: 'FPC Bazar Federation',
-  nameHi: 'एफपीसी बाज़ार फेडरेशन',
+  nameHi: 'एफपीसी बाजार फेडरेशन',
   tagline: { en: 'Kisan • Yuva • Mahila Kalyan', hi: 'किसान • युवा • महिला कल्याण' } as LText,
   motto: { en: 'Chemical-free Farming • Healthy India • Self-reliant India', hi: 'जहर मुक्त कृषि • स्वस्थ भारत • आत्मनिर्भर भारत' } as LText,
   slogan: { en: 'Prosperous India, Prosperous Farmers', hi: 'समृद्ध किसान, समृद्ध भारत' } as LText,
@@ -66,7 +66,7 @@ export const missionVision = {
 export const about = {
   intro: {
     en: 'FPC Bazaar Federation is a producer cooperative federation dedicated to empowering India’s agricultural sector. Working across agriculture, dairy projects, gaushala development, government initiatives, net-house and poly-house farming and market linkage, we bridge the gap between farmers and sustainable growth opportunities — so that the backbone of our economy, the farmer, thrives in a competitive market.',
-    hi: 'एफपीसी बाज़ार फेडरेशन एक उत्पादक सहकारी फेडरेशन है जो भारत के कृषि क्षेत्र को सशक्त बनाने के लिए समर्पित है। कृषि, डेयरी परियोजनाएं, गौशाला विकास, सरकारी योजनाएं, नेट-हाउस व पॉली-हाउस खेती और बाज़ार लिंकेज के माध्यम से हम किसानों और टिकाऊ विकास के अवसरों के बीच सेतु बनाते हैं।',
+    hi: 'एफपीसी बाजार फेडरेशन एक उत्पादक सहकारी फेडरेशन है जो भारत के कृषि क्षेत्र को सशक्त बनाने के लिए समर्पित है। कृषि, डेयरी परियोजनाएं, गौशाला विकास, सरकारी योजनाएं, नेट-हाउस व पॉली-हाउस खेती और बाज़ार लिंकेज के माध्यम से हम किसानों और टिकाऊ विकास के अवसरों के बीच सेतु बनाते हैं।',
   },
 }
 
@@ -101,7 +101,7 @@ export const chairman: Leader = {
   photo: team.laxmanLohana,
   message: {
     en: 'It gives me immense pleasure to introduce FPC Bazaar Federation, an organisation committed to transforming the agricultural landscape of our nation. Agriculture is not just a profession; it is the backbone of our economy and a way of life for millions. We are driven by the belief that empowering farmers is key to building a prosperous and sustainable future. Our vision is clear: to be a trusted partner in every farmer’s journey towards growth and success. I invite you to join hands with us in this mission.',
-    hi: 'एफपीसी बाज़ार फेडरेशन का परिचय कराते हुए मुझे अत्यंत प्रसन्नता हो रही है — एक ऐसा संगठन जो देश के कृषि परिदृश्य को बदलने के लिए प्रतिबद्ध है। कृषि केवल व्यवसाय नहीं, हमारी अर्थव्यवस्था की रीढ़ और करोड़ों लोगों की जीवनशैली है। हमारा विश्वास है कि किसानों को सशक्त करना ही समृद्ध और टिकाऊ भविष्य की कुंजी है। हमारा लक्ष्य हर किसान की विकास यात्रा में एक भरोसेमंद साथी बनना है। मैं आपको इस मिशन से जुड़ने के लिए आमंत्रित करता हूं।',
+    hi: 'एफपीसी बाजार फेडरेशन का परिचय कराते हुए मुझे अत्यंत प्रसन्नता हो रही है — एक ऐसा संगठन जो देश के कृषि परिदृश्य को बदलने के लिए प्रतिबद्ध है। कृषि केवल व्यवसाय नहीं, हमारी अर्थव्यवस्था की रीढ़ और करोड़ों लोगों की जीवनशैली है। हमारा विश्वास है कि किसानों को सशक्त करना ही समृद्ध और टिकाऊ भविष्य की कुंजी है। हमारा लक्ष्य हर किसान की विकास यात्रा में एक भरोसेमंद साथी बनना है। मैं आपको इस मिशन से जुड़ने के लिए आमंत्रित करता हूं।',
   },
 }
 

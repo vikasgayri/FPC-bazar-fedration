@@ -31,7 +31,7 @@ export function Logo({ light, compact, className }: { light?: boolean; compact?:
       </span>
       <span className="leading-none">
         <span className={cn('block whitespace-nowrap font-display font-semibold tracking-[-0.01em]', compact ? 'text-[0.95rem] sm:text-[1.05rem]' : 'text-[1rem] sm:text-[1.3rem]', light ? 'text-white' : 'text-navy-900')}>
-          {isHi ? 'एफपीसी बाज़ार फेडरेशन' : 'FPC Bazaar Federation'}
+          {isHi ? 'एफपीसी बाजार फेडरेशन' : 'FPC Bazaar Federation'}
         </span>
         <span className={cn('mt-1 block whitespace-nowrap text-[0.52rem] font-bold uppercase tracking-[0.16em] sm:text-[0.6rem] sm:tracking-[0.2em]', light ? 'text-gold-400' : 'text-gold-600')}>
           {isHi ? 'किसान • युवा • महिला कल्याण' : 'Kisan • Yuva • Mahila Kalyan'}

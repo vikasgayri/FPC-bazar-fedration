@@ -113,7 +113,7 @@ export const initiatives: Initiative[] = [
       },
       {
         en: 'The FPC Bazaar digital marketplace lets member FPOs, SHGs and dairies list products, reach new buyers and receive digital payments.',
-        hi: 'FPC बाज़ार डिजिटल मंडी से सदस्य FPO, SHG और डेयरियां अपने उत्पाद सूचीबद्ध कर नए खरीदारों तक पहुंचती हैं।',
+        hi: 'FPC बाजार डिजिटल मंडी से सदस्य FPO, SHG और डेयरियां अपने उत्पाद सूचीबद्ध कर नए खरीदारों तक पहुंचती हैं।',
       },
     ],
     highlights: [
@@ -143,7 +143,7 @@ export const initiatives: Initiative[] = [
       },
       {
         en: 'SHG products are showcased at exhibitions and listed on the FPC Bazaar marketplace so that women earn directly from every sale.',
-        hi: 'SHG उत्पाद प्रदर्शनियों और FPC बाज़ार मार्केटप्लेस पर उपलब्ध कराए जाते हैं ताकि हर बिक्री से महिलाओं को सीधी आय हो।',
+        hi: 'SHG उत्पाद प्रदर्शनियों और FPC बाजार मार्केटप्लेस पर उपलब्ध कराए जाते हैं ताकि हर बिक्री से महिलाओं को सीधी आय हो।',
       },
     ],
     highlights: [
