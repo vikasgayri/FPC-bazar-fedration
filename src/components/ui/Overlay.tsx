@@ -79,7 +79,16 @@ export function Lightbox({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div className="fixed inset-0 z-[95] flex items-center justify-center bg-navy-950/95 p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}>
+        <motion.div
+          className="fixed inset-0 z-[95] flex items-center justify-center bg-navy-950/95 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={images[index!].caption ?? 'Photo'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
           <button className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label="Close">
             <X className="h-5 w-5" />
           </button>

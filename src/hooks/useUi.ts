@@ -41,3 +41,17 @@ export function useLockBody(lock: boolean) {
     }
   }, [lock])
 }
+
+/** Calls onClose when Escape is pressed while an overlay is open. */
+export function useEscape(open: boolean, onClose: () => void) {
+  const cb = useRef(onClose)
+  useEffect(() => {
+    cb.current = onClose
+  })
+  useEffect(() => {
+    if (!open) return
+    const k = (e: KeyboardEvent) => e.key === 'Escape' && cb.current()
+    window.addEventListener('keydown', k)
+    return () => window.removeEventListener('keydown', k)
+  }, [open])
+}

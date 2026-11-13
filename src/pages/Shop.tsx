@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, Search, SlidersHorizontal, X, PackageSearch, Handshake, ShieldCheck, Sprout, Store } from 'lucide-react'
@@ -7,7 +7,7 @@ import ProductCard, { ProductSkeleton } from '@/components/shop/ProductCard'
 import { DemoNotice, EmptyState } from '@/components/ui/Primitives'
 import { useAsync } from '@/hooks/useAsync'
 import { useLang } from '@/hooks/useLang'
-import { useDocumentTitle, useLockBody } from '@/hooks/useUi'
+import { useDocumentTitle, useEscape, useLockBody } from '@/hooks/useUi'
 import { productService, stateOf } from '@/services/productService'
 import { categories } from '@/mocks/products'
 import { stock } from '@/data/images'
@@ -21,6 +21,7 @@ export default function Shop() {
   const [q, setQ] = useState(params.get('q') ?? '')
   const [drawer, setDrawer] = useState(false)
   useLockBody(drawer)
+  useEscape(drawer, () => setDrawer(false))
 
   const query: ProductQuery = {
     q: params.get('q') ?? undefined,
@@ -57,6 +58,7 @@ export default function Shop() {
   const Filters = useMemo(
     () =>
       function FiltersPanel() {
+        const stateId = useId()
         return (
           <div className="space-y-8">
             <div>
@@ -81,10 +83,10 @@ export default function Shop() {
               </ul>
             </div>
             <div>
-              <label htmlFor="state-filter" className="text-xs font-bold uppercase tracking-[0.2em] text-gold-600">
+              <label htmlFor={stateId} className="text-xs font-bold uppercase tracking-[0.2em] text-gold-600">
                 {t('shop.state')}
               </label>
-              <select id="state-filter" value={params.get('state') ?? ''} onChange={(e) => set('state', e.target.value || null)} className="field mt-4 !rounded-xl !py-2.5 text-sm font-semibold">
+              <select id={stateId} value={params.get('state') ?? ''} onChange={(e) => set('state', e.target.value || null)} className="field mt-4 !rounded-xl !py-2.5 text-sm font-semibold">
                 <option value="">{t('shop.allStates')}</option>
                 {states.map((st) => (
                   <option key={st} value={st}>
@@ -236,7 +238,7 @@ export default function Shop() {
         {drawer && (
           <motion.div className="fixed inset-0 z-[85] lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="absolute inset-0 bg-navy-950/60" onClick={() => setDrawer(false)} />
-            <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ duration: 0.35 }} className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white p-6">
+            <motion.div role="dialog" aria-modal="true" aria-label={t('shop.filters')} initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ duration: 0.35 }} className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white p-6">
               <div className="mb-6 flex items-center justify-between">
                 <p className="font-display text-xl text-navy-900">{t('shop.filters')}</p>
                 <button onClick={() => setDrawer(false)} className="grid h-9 w-9 place-items-center rounded-full bg-cream-100" aria-label="Close">

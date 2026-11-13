@@ -18,7 +18,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
+          react: ['react', 'react-dom', 'react-dom/client', 'react-router-dom'],
           motion: ['framer-motion'],
           forms: ['react-hook-form', 'zod', '@hookform/resolvers'],
           i18n: ['i18next', 'react-i18next'],

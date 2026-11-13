@@ -8,12 +8,14 @@ const PREFIX = 'fpcbf_demo_v1:'
  * the new content instead of their stale localStorage copy. Demo data is reset once.
  */
 const SEED_VERSION = 3
+/** Keys that survive a demo-data reset: language, signed-in user/admin, seed marker. */
+const KEEP = [':lang', ':session', ':admin_session', ':__seed_version']
 
 try {
   const VERSION_KEY = PREFIX + '__seed_version'
   if (localStorage.getItem(VERSION_KEY) !== String(SEED_VERSION)) {
     Object.keys(localStorage)
-      .filter((k) => k.startsWith(PREFIX) && !k.endsWith(':lang') && !k.endsWith(':session') && !k.endsWith(':admin_session'))
+      .filter((k) => k.startsWith(PREFIX) && !KEEP.some((x) => k.endsWith(x)))
       .forEach((k) => localStorage.removeItem(k))
     localStorage.setItem(VERSION_KEY, String(SEED_VERSION))
   }
@@ -44,10 +46,11 @@ export const demoStore = {
       /* ignore */
     }
   },
+  /** Removes demo data (products, enquiries, registrations…) but keeps language and sign-in. */
   clearAll() {
     try {
       Object.keys(localStorage)
-        .filter((k) => k.startsWith(PREFIX))
+        .filter((k) => k.startsWith(PREFIX) && !KEEP.some((x) => k.endsWith(x)))
         .forEach((k) => localStorage.removeItem(k))
     } catch {
       /* ignore */

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ClipboardList, Minus, Plus, Trash2, Users, X } from 'lucide-react'
 import { MAX_QTY, useEnquiryList } from '@/context/EnquiryListContext'
 import { useLang } from '@/hooks/useLang'
-import { useLockBody } from '@/hooks/useUi'
+import { useEscape, useLockBody } from '@/hooks/useUi'
 import { inr, qtyStep } from '@/utils/format'
 import Img from '@/components/ui/Img'
 import { DemoPill } from '@/components/ui/Primitives'
@@ -39,6 +39,7 @@ export default function EnquiryDrawer() {
   const { t, L } = useLang()
   const nav = useNavigate()
   useLockBody(drawerOpen)
+  useEscape(drawerOpen, () => setDrawerOpen(false))
 
   return (
     <AnimatePresence>
@@ -51,6 +52,9 @@ export default function EnquiryDrawer() {
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-cream-50"
+            role="dialog"
+            aria-modal="true"
+            aria-label={t('elist.title')}
           >
             <div className="flex items-center justify-between border-b border-navy-900/10 bg-white px-6 py-5">
               <div className="flex items-center gap-3">

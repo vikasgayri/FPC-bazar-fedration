@@ -78,7 +78,7 @@ const schema = z
     dailyMilk: z.string().optional(),
     breeds: z.string().optional(),
     interests: z.array(z.string()),
-    consent: z.literal(true, { errorMap: () => ({ message: 'Please confirm to continue' }) }),
+    consent: z.literal(true, { error: 'Please confirm to continue' }),
   })
   .superRefine((d, ctx) => {
     const need = (k: keyof typeof d, msg = 'Required') => {

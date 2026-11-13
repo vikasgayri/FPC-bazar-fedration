@@ -5,7 +5,7 @@ import { ChevronDown, ClipboardList, Heart, Mail, Phone, User, X } from 'lucide-
 import { Logo } from '@/components/ui/Brand'
 import { LangSwitch } from './Header'
 import { useLang } from '@/hooks/useLang'
-import { useLockBody } from '@/hooks/useUi'
+import { useEscape, useLockBody } from '@/hooks/useUi'
 import { mainNav, megaGroups } from './navigation'
 import { groupLabel } from '@/data/initiatives'
 import { org } from '@/data/site'
@@ -17,6 +17,7 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
   const { user } = useAuth()
   const [expanded, setExpanded] = useState<string | null>(null)
   useLockBody(open)
+  useEscape(open, onClose)
 
   return (
     <AnimatePresence>
@@ -29,6 +30,8 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
             exit={{ x: '100%' }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-navy-950 text-white"
+            role="dialog"
+            aria-modal="true"
             aria-label={t('nav.menu')}
           >
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">

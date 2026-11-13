@@ -1,5 +1,11 @@
-import { forwardRef, type InputHTMLAttributes, type SelectHTMLAttributes, type TextareaHTMLAttributes, type ReactNode } from 'react'
+import { forwardRef, useId, type InputHTMLAttributes, type SelectHTMLAttributes, type TextareaHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@/utils/format'
+
+/** Unique, label-linked id even for inputs without a `name` (and no clashes between two forms). */
+function useFieldId(id?: string, name?: string) {
+  const auto = useId()
+  return id ?? (name ? `${name}-${auto}` : auto)
+}
 
 interface Base {
   label: ReactNode
@@ -12,27 +18,31 @@ export const Input = forwardRef<HTMLInputElement, Base & InputHTMLAttributes<HTM
   { label, error, hint, wrapClassName, className, id, ...rest },
   ref,
 ) {
-  const fid = id ?? (rest.name as string)
+  const fid = useFieldId(id, rest.name as string | undefined)
   return (
     <div className={wrapClassName}>
       <label htmlFor={fid} className="field-label">
         {label}
       </label>
-      <input id={fid} ref={ref} aria-invalid={!!error} className={cn('field', error && 'border-red-400 focus:border-red-500 focus:ring-red-500/10', className)} {...rest} />
-      {error ? <p className="field-error">{error}</p> : hint ? <p className="mt-1 text-xs text-ink-mute">{hint}</p> : null}
+      <input id={fid} ref={ref} aria-invalid={!!error} aria-describedby={error ? `${fid}-err` : undefined} className={cn('field', error && 'border-red-400 focus:border-red-500 focus:ring-red-500/10', className)} {...rest} />
+      {error ? (
+        <p id={`${fid}-err`} className="field-error">
+          {error}
+        </p>
+      ) : hint ? <p className="mt-1 text-xs text-ink-mute">{hint}</p> : null}
     </div>
   )
 })
 
 export const Select = forwardRef<HTMLSelectElement, Base & SelectHTMLAttributes<HTMLSelectElement> & { options: { value: string; label: string }[]; placeholder?: string }>(
   function Select({ label, error, wrapClassName, className, options, placeholder, id, ...rest }, ref) {
-    const fid = id ?? (rest.name as string)
+    const fid = useFieldId(id, rest.name as string | undefined)
     return (
       <div className={wrapClassName}>
         <label htmlFor={fid} className="field-label">
           {label}
         </label>
-        <select id={fid} ref={ref} aria-invalid={!!error} className={cn('field appearance-none bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2712%27%20height%3D%278%27%3E%3Cpath%20d%3D%27M1%201l5%205%205-5%27%20stroke%3D%27%230B2545%27%20fill%3D%27none%27%20stroke-width%3D%271.5%27/%3E%3C/svg%3E")] bg-[right_1rem_center] bg-no-repeat pr-10', error && 'border-red-400', className)} {...rest}>
+        <select id={fid} ref={ref} aria-invalid={!!error} aria-describedby={error ? `${fid}-err` : undefined} className={cn('field appearance-none bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2712%27%20height%3D%278%27%3E%3Cpath%20d%3D%27M1%201l5%205%205-5%27%20stroke%3D%27%230B2545%27%20fill%3D%27none%27%20stroke-width%3D%271.5%27/%3E%3C/svg%3E")] bg-[right_1rem_center] bg-no-repeat pr-10', error && 'border-red-400', className)} {...rest}>
           {placeholder && <option value="">{placeholder}</option>}
           {options.map((o) => (
             <option key={o.value} value={o.value}>
@@ -40,7 +50,11 @@ export const Select = forwardRef<HTMLSelectElement, Base & SelectHTMLAttributes<
             </option>
           ))}
         </select>
-        {error && <p className="field-error">{error}</p>}
+        {error && (
+          <p id={`${fid}-err`} className="field-error">
+            {error}
+          </p>
+        )}
       </div>
     )
   },
@@ -50,14 +64,18 @@ export const Textarea = forwardRef<HTMLTextAreaElement, Base & TextareaHTMLAttri
   { label, error, wrapClassName, className, id, ...rest },
   ref,
 ) {
-  const fid = id ?? (rest.name as string)
+  const fid = useFieldId(id, rest.name as string | undefined)
   return (
     <div className={wrapClassName}>
       <label htmlFor={fid} className="field-label">
         {label}
       </label>
-      <textarea id={fid} ref={ref} rows={4} aria-invalid={!!error} className={cn('field resize-y', error && 'border-red-400', className)} {...rest} />
-      {error && <p className="field-error">{error}</p>}
+      <textarea id={fid} ref={ref} rows={4} aria-invalid={!!error} aria-describedby={error ? `${fid}-err` : undefined} className={cn('field resize-y', error && 'border-red-400', className)} {...rest} />
+      {error && (
+        <p id={`${fid}-err`} className="field-error">
+          {error}
+        </p>
+      )}
     </div>
   )
 })

@@ -6,7 +6,12 @@ export const pinRx = /^[1-9]\d{5}$/
 export const phone = z
   .string()
   .trim()
-  .transform((v) => v.replace(/[\s-]/g, '').replace(/^\+?91/, ''))
+  // Accept "98765 43210", "+91 98765 43210", "09876543210". Only strip a country/trunk prefix when the
+  // number is longer than 10 digits — a plain mobile can itself start with 91 (e.g. 91234 56789).
+  .transform((v) => {
+    const d = v.replace(/[\s-]/g, '')
+    return /^(\+?91|0)\d{10}$/.test(d) ? d.slice(-10) : d
+  })
   .refine((v) => phoneRx.test(v), 'Enter a valid 10-digit Indian mobile number')
 
 export const email = z.string().trim().email('Enter a valid email address')
