@@ -5,7 +5,11 @@ import { collection } from './storage'
 import { seedProducts } from '@/mocks/products'
 import { slugify, uid } from '@/utils/format'
 
-const store = collection<Product>('products', seedProducts)
+const store = collection<Product>(
+  'products',
+  seedProducts,
+  (p) => !!p && typeof p.price === 'number' && typeof p.moq === 'number' && typeof p.capacity === 'number' && !!p.name?.en,
+)
 
 /** State part of "District, State" — used for the state filter. */
 export const stateOf = (p: Pick<Product, 'origin'>) => p.origin.split(',').pop()!.trim()

@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import SiteLayout from '@/components/layout/SiteLayout'
 import { PageLoader } from '@/components/ui/Primitives'
 import Home from '@/pages/Home'
+import RouteError from '@/pages/RouteError'
 
 const About = lazy(() => import('@/pages/About'))
 const Initiatives = lazy(() => import('@/pages/Initiatives'))
@@ -41,6 +42,7 @@ const S = (el: ReactNode) => <Suspense fallback={<PageLoader />}>{el}</Suspense>
 const router = createBrowserRouter([
   {
     element: <SiteLayout />,
+    errorElement: <RouteError />,
     children: [
       { path: '/', element: <Home /> },
       { path: '/about', element: S(<About />) },
@@ -69,10 +71,11 @@ const router = createBrowserRouter([
       { path: '*', element: S(<NotFound />) },
     ],
   },
-  { path: '/admin/login', element: S(<AdminLogin />) },
+  { path: '/admin/login', element: S(<AdminLogin />), errorElement: <RouteError /> },
   {
     path: '/admin',
     element: S(<AdminLayout />),
+    errorElement: <RouteError />,
     children: [
       { index: true, element: S(<AdminDashboard />) },
       { path: 'products', element: S(<AdminProducts />) },

@@ -6,7 +6,11 @@ import { seedTradeEnquiries } from '@/mocks/tradeEnquiries'
 import { productService } from './productService'
 import { uid } from '@/utils/format'
 
-const store = collection<TradeEnquiry>('trade_enquiries', seedTradeEnquiries)
+const store = collection<TradeEnquiry>(
+  'trade_enquiries',
+  seedTradeEnquiries,
+  (e) => !!e && Array.isArray(e.lines) && typeof e.indicativeValue === 'number' && Array.isArray(e.history),
+)
 
 export interface CreateTradeEnquiryInput {
   userId: string | null

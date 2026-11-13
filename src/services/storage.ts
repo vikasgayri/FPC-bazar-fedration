@@ -55,12 +55,17 @@ export const demoStore = {
   },
 }
 
-/** Seed-once collection helper: returns stored array or seeds with defaults. */
-export function collection<T>(key: string, seed: () => T[]) {
+/**
+ * Seed-once collection helper: returns stored array or seeds with defaults.
+ * `valid` guards against data saved by an older version of the app (e.g. a tab that was
+ * still open during an update): if any stored record has the wrong shape, the demo data
+ * for this collection is re-seeded instead of crashing the page.
+ */
+export function collection<T>(key: string, seed: () => T[], valid?: (item: T) => boolean) {
   return {
     all(): T[] {
       const existing = demoStore.get<T[] | null>(key, null)
-      if (existing) return existing
+      if (Array.isArray(existing) && (!valid || existing.every(valid))) return existing
       const s = seed()
       demoStore.set(key, s)
       return s
