@@ -1,3 +1,4 @@
+import { safeNext } from '@/utils/format'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -20,7 +21,7 @@ export default function Signup() {
   const toast = useToast()
   const nav = useNavigate()
   const [params] = useSearchParams()
-  const next = params.get('next') ?? '/account'
+  const next = safeNext(params.get('next'))
   const [err, setErr] = useState<string | null>(null)
   const {
     register,

@@ -1,3 +1,4 @@
+import { safeNext } from '@/utils/format'
 import { useState } from 'react'
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -22,7 +23,7 @@ export default function Login() {
   const nav = useNavigate()
   const [params] = useSearchParams()
   const [err, setErr] = useState<string | null>(null)
-  const next = params.get('next') ?? '/account'
+  const next = safeNext(params.get('next'))
   const {
     register,
     handleSubmit,

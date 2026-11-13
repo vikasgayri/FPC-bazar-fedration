@@ -27,3 +27,9 @@ export const cn = (...c: (string | false | null | undefined)[]) => c.filter(Bool
 
 /** Sensible +/- step for bulk quantities (moq 500 → 50, moq 25 → 5). */
 export const qtyStep = (moq: number) => Math.max(1, 10 ** Math.floor(Math.log10(Math.max(1, moq))) / 2)
+
+/**
+ * Only allow in-site redirect targets ("/account", "/bazaar/enquiry/send").
+ * Blocks "//evil.com", "/\evil.com" and absolute URLs passed via ?next=.
+ */
+export const safeNext = (v: string | null, fallback = '/account') => (v && /^\/(?![/\\])/.test(v) && !/[\\]/.test(v) ? v : fallback)
