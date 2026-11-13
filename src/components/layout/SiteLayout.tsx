@@ -4,7 +4,7 @@ import { MessageCircle, ArrowUp } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Header from './Header'
 import Footer from './Footer'
-import CartDrawer from '@/components/shop/CartDrawer'
+import EnquiryDrawer from '@/components/shop/EnquiryDrawer'
 import { org } from '@/data/site'
 import { useScrolled } from '@/hooks/useUi'
 import { useLang } from '@/hooks/useLang'
@@ -38,7 +38,7 @@ export default function SiteLayout() {
         <Outlet />
       </main>
       <Footer />
-      <CartDrawer />
+      <EnquiryDrawer />
 
       <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3">
         <AnimatePresence>

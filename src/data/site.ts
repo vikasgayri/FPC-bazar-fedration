@@ -42,9 +42,9 @@ export const org = {
 }
 
 export const goals = [
-  { value: 1000, suffix: '', label: { en: 'FPOs in the federation network', hi: 'फेडरेशन नेटवर्क में FPO' }, note: { en: 'Network goal', hi: 'लक्ष्य' } },
+  { value: 6000, suffix: '', label: { en: 'FPOs in the federation network', hi: 'फेडरेशन नेटवर्क में FPO' }, note: { en: 'Current network', hi: 'वर्तमान नेटवर्क' } },
+  { value: 17, suffix: '', label: { en: 'States connected with the federation', hi: 'फेडरेशन से जुड़े राज्य' }, note: { en: 'Pan-India presence', hi: 'देशव्यापी उपस्थिति' } },
   { value: 10000, suffix: '', label: { en: 'Youth to be employed & self-reliant', hi: 'युवाओं को रोजगार एवं आत्मनिर्भरता' }, note: { en: 'Mission target', hi: 'मिशन लक्ष्य' } },
-  { value: 4, suffix: '', label: { en: 'States in the initial rollout', hi: 'प्रारंभिक कार्य क्षेत्र राज्य' }, note: { en: 'MP • RJ • GJ • MH', hi: 'म.प्र. • राज. • गुज. • महा.' } },
   { value: 0, prefix: '₹', suffix: '', label: { en: 'Investment required from beneficiaries', hi: 'लाभार्थी से कोई निवेश नहीं' }, note: { en: 'PPP model', hi: 'PPP मॉडल' } },
 ]
 
@@ -58,15 +58,15 @@ export const missionVision = {
     hi: 'युवाओं को रोजगार, महिलाओं को रोजगार और आदिवासी परिवारों को आत्मनिर्भर बनाना — टिकाऊ कृषि और पारंपरिक संसाधनों के संरक्षण के साथ ग्रामीण विकास में परिवर्तनकारी शक्ति बनना।',
   },
   objective: {
-    en: 'Partner with 1,000 FPOs to create employment for 10,000 youth — self-reliant youth, self-sufficient farmers, prosperous India.',
-    hi: '1000 FPO के साथ मिलकर 10,000 युवाओं को रोजगार — आत्मनिर्भर युवा, स्वावलंबी किसान, समृद्ध भारत।',
+    en: 'Through a network of 6,000+ FPOs across 17 states, create employment for 10,000 youth — self-reliant youth, self-sufficient farmers, prosperous India.',
+    hi: '17 राज्यों के 6,000+ FPO के नेटवर्क के माध्यम से 10,000 युवाओं को रोजगार — आत्मनिर्भर युवा, स्वावलंबी किसान, समृद्ध भारत।',
   },
 }
 
 export const about = {
   intro: {
-    en: 'FPC Bazaar Federation is a producer cooperative federation dedicated to empowering India’s agricultural sector. Working across agriculture, dairy projects, gaushala development, government initiatives, net-house and poly-house farming and market linkage, we bridge the gap between farmers and sustainable growth opportunities — so that the backbone of our economy, the farmer, thrives in a competitive market.',
-    hi: 'एफपीसी बाजार फेडरेशन एक उत्पादक सहकारी फेडरेशन है जो भारत के कृषि क्षेत्र को सशक्त बनाने के लिए समर्पित है। कृषि, डेयरी परियोजनाएं, गौशाला विकास, सरकारी योजनाएं, नेट-हाउस व पॉली-हाउस खेती और बाज़ार लिंकेज के माध्यम से हम किसानों और टिकाऊ विकास के अवसरों के बीच सेतु बनाते हैं।',
+    en: 'FPC Bazaar Federation is a not-for-profit federation of Farmer Producer Organisations, with 6,000+ FPOs across 17 states in its network. Working across agriculture, dairy projects, gaushala development, government initiatives, net-house and poly-house farming and market linkage, we bridge the gap between farmers and sustainable growth opportunities — so that the backbone of our economy, the farmer, thrives in a competitive market.',
+    hi: 'एफपीसी बाजार फेडरेशन किसान उत्पादक संगठनों का एक गैर-लाभकारी फेडरेशन है, जिसके नेटवर्क में 17 राज्यों के 6,000+ FPO जुड़े हैं। कृषि, डेयरी परियोजनाएं, गौशाला विकास, सरकारी योजनाएं, नेट-हाउस व पॉली-हाउस खेती और बाज़ार लिंकेज के माध्यम से हम किसानों और टिकाऊ विकास के अवसरों के बीच सेतु बनाते हैं।',
   },
 }
 

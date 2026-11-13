@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, Heart, Mail, Menu, Phone, ShieldCheck, ShoppingBag, User, ArrowUpRight } from 'lucide-react'
+import { ChevronDown, ClipboardList, Heart, Mail, Menu, Phone, ShieldCheck, User, ArrowUpRight } from 'lucide-react'
 import { Logo, InitiativeIcon } from '@/components/ui/Brand'
 import { useScrolled } from '@/hooks/useUi'
 import { useLang } from '@/hooks/useLang'
-import { useCart } from '@/context/CartContext'
+import { useEnquiryList } from '@/context/EnquiryListContext'
 import { useAuth } from '@/context/AuthContext'
 import { org } from '@/data/site'
 import { groupLabel } from '@/data/initiatives'
@@ -39,7 +39,7 @@ export function LangSwitch({ light, className }: { light?: boolean; className?: 
 export default function Header() {
   const scrolled = useScrolled(40)
   const { t, L } = useLang()
-  const { count, setDrawerOpen, wishlist } = useCart()
+  const { count, setDrawerOpen, wishlist } = useEnquiryList()
   const { user } = useAuth()
   const [open, setOpen] = useState<string | null>(null)
   const [mobile, setMobile] = useState(false)
@@ -50,7 +50,7 @@ export default function Header() {
     setMobile(false)
   }, [pathname, hash])
 
-  const lightTop = ['/login', '/signup'].includes(pathname) || pathname.startsWith('/bazaar/order')
+  const lightTop = ['/login', '/signup'].includes(pathname) || /^\/bazaar\/enquiry\/(?!send$)[^/]+$/.test(pathname)
   const solid = scrolled || open !== null || lightTop
   const iconBtn = cn(
     'relative grid h-10 w-10 place-items-center rounded-full transition',
@@ -94,19 +94,19 @@ export default function Header() {
           )}
         >
           <div className={cn('container-wide flex items-center justify-between gap-2 transition-all duration-500 sm:gap-6', scrolled ? 'h-[76px]' : 'h-[92px]')}>
-            <Logo light={!solid} compact={scrolled} />
+            <Logo light={!solid} compact={scrolled} className="xl:shrink-0" />
 
             <nav className="hidden items-center xl:flex" aria-label="Primary">
               {mainNav.map((item) => {
                 const has = !!(item.children || item.mega)
                 return (
-                  <div key={item.to} className="relative" onMouseEnter={() => setOpen(has ? item.to : null)}>
+                  <div key={item.to} className={cn('relative', item.to === '/' && 'hidden 2xl:block')} onMouseEnter={() => setOpen(has ? item.to : null)}>
                     <NavLink
                       to={item.to}
                       end={item.to === '/'}
                       className={({ isActive }) =>
                         cn(
-                          'group relative flex items-center gap-1 whitespace-nowrap px-3 py-2 text-[12.5px] font-bold uppercase tracking-[0.08em] transition-colors',
+                          'group relative flex items-center gap-1 whitespace-nowrap px-2.5 py-2 text-[12.5px] 2xl:px-3 font-bold uppercase tracking-[0.08em] transition-colors',
                           solid ? 'text-navy-900' : 'text-white',
                           isActive && (solid ? 'text-leaf-700' : 'text-gold-400'),
                         )
@@ -152,7 +152,7 @@ export default function Header() {
                 {wishlist.length > 0 && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-saffron-500" />}
               </Link>
               <button onClick={() => setDrawerOpen(true)} className={iconBtn} aria-label={t('nav.cart')}>
-                <ShoppingBag className="h-[19px] w-[19px]" />
+                <ClipboardList className="h-[19px] w-[19px]" />
                 {count > 0 && (
                   <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-gold-500 px-1 text-[10px] font-extrabold text-navy-950">{count}</span>
                 )}

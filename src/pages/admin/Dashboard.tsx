@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { IndianRupee, ShoppingCart, Package, ClipboardList, MessagesSquare, ArrowUpRight } from 'lucide-react'
+import { IndianRupee, Handshake, Package, ClipboardList, MessagesSquare, ArrowUpRight } from 'lucide-react'
 import { AdminCard, PageTitle } from '@/components/admin/AdminUi'
 import { PageLoader, StatusBadge } from '@/components/ui/Primitives'
 import { useAsync } from '@/hooks/useAsync'
@@ -18,7 +18,7 @@ export default function Dashboard() {
   const { data: s, loading } = useAsync(() => adminService.dashboard(), [])
   if (loading || !s) return <PageLoader />
 
-  const max = Math.max(1, ...s.salesByDay.map((d) => d.total))
+  const max = Math.max(1, ...s.enquiriesByDay.map((d) => d.total))
   const totalRegs = Object.values(s.byType).reduce((a, b) => a + b, 0) || 1
   let acc = 0
   const arcs = (Object.keys(s.byType) as RegistrationType[]).map((k) => {
@@ -29,16 +29,16 @@ export default function Dashboard() {
   const conic = arcs.map((a) => `${TYPE_COLOR[a.k]} ${a.from * 360}deg ${a.to * 360}deg`).join(', ')
 
   const cards = [
-    { I: IndianRupee, l: t('admin.revenue'), v: inr(s.revenue), sub: `${s.orders} ${t('admin.orders').toLowerCase()}`, to: '/admin/orders' },
-    { I: ShoppingCart, l: t('admin.orders'), v: s.orders, sub: `${s.pendingOrders} ${t('admin.pending')}`, to: '/admin/orders' },
-    { I: Package, l: t('admin.products'), v: s.products, sub: `${s.lowStock} ${t('admin.lowStock')}`, to: '/admin/products' },
+    { I: IndianRupee, l: t('admin.pipeline'), v: `≈ ${inr(s.pipelineValue)}`, sub: `${s.openTradeEnquiries} ${t('admin.pending')}`, to: '/admin/trade-enquiries' },
+    { I: Handshake, l: t('admin.orders'), v: s.tradeEnquiries, sub: `${s.linkedTradeEnquiries} ${t('admin.linked')}`, to: '/admin/trade-enquiries' },
+    { I: Package, l: t('admin.products'), v: s.products, sub: `${s.seasonal} ${t('admin.seasonal')}`, to: '/admin/products' },
     { I: ClipboardList, l: t('admin.registrations'), v: s.registrations, sub: `${s.pendingRegistrations} ${t('admin.pending')}`, to: '/admin/registrations' },
     { I: MessagesSquare, l: t('admin.enquiries'), v: s.enquiries, sub: `${s.newEnquiries} ${t('admin.newLabel')}`, to: '/admin/enquiries' },
   ]
 
   return (
     <>
-      <PageTitle title={t('admin.dashboard')} text="Overview of demo marketplace orders, member registrations and enquiries." />
+      <PageTitle title={t('admin.dashboard')} text="Overview of buyer–FPO trade enquiries, member registrations and general enquiries (demo data)." />
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
         {cards.map(({ I, l, v, sub, to }, i) => (
           <motion.div key={l} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className={i === 0 ? 'col-span-2 lg:col-span-1' : ''}>
@@ -60,9 +60,9 @@ export default function Dashboard() {
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         <AdminCard title={t('admin.salesWeek')} className="lg:col-span-2">
           <div className="flex h-64 items-end gap-3 px-5 pb-5 pt-8">
-            {s.salesByDay.map((d, i) => (
+            {s.enquiriesByDay.map((d, i) => (
               <div key={i} className="flex flex-1 flex-col items-center gap-2">
-                <span className="text-[10px] font-bold text-ink-mute">{d.total ? inr(d.total) : ''}</span>
+                <span className="text-[10px] font-bold text-ink-mute">{d.total || ''}</span>
                 <motion.div
                   initial={{ height: 0 }}
                   animate={{ height: `${Math.max(4, (d.total / max) * 170)}px` }}
@@ -98,19 +98,19 @@ export default function Dashboard() {
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <AdminCard title={t('admin.recentOrders')} action={<Link to="/admin/orders" className="text-xs font-bold text-leaf-700">{t('common.viewAll')} →</Link>}>
+        <AdminCard title={t('admin.recentOrders')} action={<Link to="/admin/trade-enquiries" className="text-xs font-bold text-leaf-700">{t('common.viewAll')} →</Link>}>
           <ul className="divide-y divide-navy-900/5">
-            {s.recentOrders.map((o) => (
+            {s.recentTradeEnquiries.map((o) => (
               <li key={o.id} className="flex items-center justify-between gap-3 px-5 py-3.5">
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-navy-900">{o.number}</p>
                   <p className="truncate text-xs text-ink-mute">
-                    {o.customerName} • {fmtDateTime(o.createdAt)}
+                    {o.organisation || o.buyerName} • {fmtDateTime(o.createdAt)}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
                   <StatusBadge status={o.status} />
-                  <span className="w-20 text-right text-sm font-bold">{inr(o.total)}</span>
+                  <span className="w-24 text-right text-sm font-bold">≈ {inr(o.indicativeValue)}</span>
                 </div>
               </li>
             ))}

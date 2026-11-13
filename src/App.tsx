@@ -1,5 +1,5 @@
 import { lazy, Suspense, type ReactNode } from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import SiteLayout from '@/components/layout/SiteLayout'
 import { PageLoader } from '@/components/ui/Primitives'
 import Home from '@/pages/Home'
@@ -7,11 +7,12 @@ import Home from '@/pages/Home'
 const About = lazy(() => import('@/pages/About'))
 const Initiatives = lazy(() => import('@/pages/Initiatives'))
 const InitiativeDetail = lazy(() => import('@/pages/InitiativeDetail'))
+const FpoServices = lazy(() => import('@/pages/FpoServices'))
 const Shop = lazy(() => import('@/pages/Shop'))
 const ProductDetail = lazy(() => import('@/pages/ProductDetail'))
-const Cart = lazy(() => import('@/pages/Cart'))
-const Checkout = lazy(() => import('@/pages/Checkout'))
-const OrderSuccess = lazy(() => import('@/pages/OrderSuccess'))
+const EnquiryList = lazy(() => import('@/pages/EnquiryList'))
+const SendEnquiry = lazy(() => import('@/pages/SendEnquiry'))
+const EnquirySent = lazy(() => import('@/pages/EnquirySent'))
 const Wishlist = lazy(() => import('@/pages/Wishlist'))
 const Login = lazy(() => import('@/pages/account/Login'))
 const Signup = lazy(() => import('@/pages/account/Signup'))
@@ -29,7 +30,7 @@ const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin'))
 const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
 const AdminDashboard = lazy(() => import('@/pages/admin/Dashboard'))
 const AdminProducts = lazy(() => import('@/pages/admin/Products'))
-const AdminOrders = lazy(() => import('@/pages/admin/Orders'))
+const AdminTradeEnquiries = lazy(() => import('@/pages/admin/TradeEnquiries'))
 const AdminRegistrations = lazy(() => import('@/pages/admin/Registrations'))
 const AdminEnquiries = lazy(() => import('@/pages/admin/Enquiries'))
 const AdminNews = lazy(() => import('@/pages/admin/NewsAdmin'))
@@ -45,10 +46,14 @@ const router = createBrowserRouter([
       { path: '/about', element: S(<About />) },
       { path: '/initiatives', element: S(<Initiatives />) },
       { path: '/initiatives/:slug', element: S(<InitiativeDetail />) },
+      { path: '/fpo-services', element: S(<FpoServices />) },
       { path: '/bazaar', element: S(<Shop />) },
-      { path: '/bazaar/cart', element: S(<Cart />) },
-      { path: '/bazaar/checkout', element: S(<Checkout />) },
-      { path: '/bazaar/order/:number', element: S(<OrderSuccess />) },
+      { path: '/bazaar/enquiry', element: S(<EnquiryList />) },
+      { path: '/bazaar/enquiry/send', element: S(<SendEnquiry />) },
+      { path: '/bazaar/enquiry/:number', element: S(<EnquirySent />) },
+      // old e-commerce URLs → enquiry flow (FPC Bazaar does not sell)
+      { path: '/bazaar/cart', element: <Navigate to="/bazaar/enquiry" replace /> },
+      { path: '/bazaar/checkout', element: <Navigate to="/bazaar/enquiry/send" replace /> },
       { path: '/bazaar/:slug', element: S(<ProductDetail />) },
       { path: '/wishlist', element: S(<Wishlist />) },
       { path: '/login', element: S(<Login />) },
@@ -71,7 +76,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: S(<AdminDashboard />) },
       { path: 'products', element: S(<AdminProducts />) },
-      { path: 'orders', element: S(<AdminOrders />) },
+      { path: 'trade-enquiries', element: S(<AdminTradeEnquiries />) },
+      { path: 'orders', element: <Navigate to="/admin/trade-enquiries" replace /> },
       { path: 'registrations', element: S(<AdminRegistrations />) },
       { path: 'enquiries', element: S(<AdminEnquiries />) },
       { path: 'news', element: S(<AdminNews />) },

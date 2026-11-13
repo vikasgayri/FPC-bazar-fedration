@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Heart, Plus, MapPin } from 'lucide-react'
+import { Check, Heart, MapPin, Plus } from 'lucide-react'
 import type { Product } from '@/types'
 import Img from '@/components/ui/Img'
-import { Stars } from '@/components/ui/Primitives'
-import { useCart } from '@/context/CartContext'
+import { useEnquiryList } from '@/context/EnquiryListContext'
 import { useToast } from '@/context/ToastContext'
 import { useLang } from '@/hooks/useLang'
-import { cn, discountPct, inr } from '@/utils/format'
+import { cn, inr } from '@/utils/format'
 
 export default function ProductCard({ p, className }: { p: Product; className?: string }) {
-  const { add, toggleWish, isWished, setDrawerOpen } = useCart()
+  const { add, has, toggleWish, isWished, setDrawerOpen } = useEnquiryList()
   const toast = useToast()
   const { t, L } = useLang()
-  const off = discountPct(p.price, p.mrp)
   const wished = isWished(p.id)
-  const out = p.stock <= 0
+  const seasonal = p.capacity <= 0
+  const inList = has(p.id)
 
   return (
     <motion.article
@@ -24,10 +23,9 @@ export default function ProductCard({ p, className }: { p: Product; className?: 
     >
       <Link to={`/bazaar/${p.slug}`} className="relative block">
         <Img src={p.image} alt={L(p.name)} sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 30vw, 50vw" wrapClassName="aspect-[4/3.4]" className="transition duration-700 group-hover:scale-[1.06]" />
-        <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
-          {off > 0 && <span className="rounded-full bg-leaf-600 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">{t('shop.off', { pct: off })}</span>}
-          {out && <span className="rounded-full bg-navy-900 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">{t('shop.outOfStock')}</span>}
-        </div>
+        {seasonal && (
+          <span className="absolute left-3 top-3 rounded-full bg-navy-900 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white">{t('shop.seasonal')}</span>
+        )}
         <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-saffron-600 backdrop-blur">{t('shop.demoListing')}</span>
       </Link>
       <button
@@ -44,32 +42,35 @@ export default function ProductCard({ p, className }: { p: Product; className?: 
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <p className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-gold-600">
-          <MapPin className="h-3 w-3" /> {p.origin}
+          <MapPin className="h-3 w-3 shrink-0" /> <span className="truncate">{p.origin}</span>
         </p>
         <Link to={`/bazaar/${p.slug}`} className="mt-1.5 line-clamp-2 font-display text-[1.08rem] leading-snug text-navy-900 hover:text-leaf-700">
           {L(p.name)}
         </Link>
-        <p className="mt-1 line-clamp-1 text-xs text-ink-mute">{p.producer}</p>
-        <div className="mt-2 flex items-center gap-2 text-xs text-ink-mute">
-          <Stars value={p.rating} /> <span>({p.reviews})</span>
-        </div>
+        <p className="mt-1 line-clamp-1 text-xs font-semibold text-leaf-700">{p.producer}</p>
+        <p className="mt-1 text-[11px] text-ink-mute">
+          {t('shop.moq')}: {p.moq.toLocaleString('en-IN')} {p.unit}
+        </p>
         <div className="mt-auto flex items-end justify-between gap-2 pt-4">
-          <div>
-            <p className="text-lg font-extrabold text-navy-900">
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-ink-mute">{t('shop.indicative')}</p>
+            <p className="text-lg font-extrabold leading-tight text-navy-900">
               {inr(p.price)} <span className="block text-xs font-semibold text-ink-mute sm:inline">/ {p.unit}</span>
             </p>
-            {off > 0 && <p className="text-xs text-ink-mute line-through">{inr(p.mrp)}</p>}
           </div>
           <button
-            disabled={out}
             onClick={() => {
               add(p.id)
               setDrawerOpen(true)
             }}
-            className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy-900 text-white transition hover:bg-leaf-700 disabled:cursor-not-allowed disabled:bg-navy-900/20"
-            aria-label={t('shop.addToCart')}
+            className={cn(
+              'grid h-11 w-11 shrink-0 place-items-center rounded-full text-white transition',
+              inList ? 'bg-leaf-600 hover:bg-leaf-700' : 'bg-navy-900 hover:bg-leaf-700',
+            )}
+            aria-label={inList ? t('shop.inEnquiry') : t('shop.addToEnquiry')}
+            title={inList ? t('shop.inEnquiry') : t('shop.addToEnquiry')}
           >
-            <Plus className="h-5 w-5" />
+            {inList ? <Check className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
           </button>
         </div>
       </div>

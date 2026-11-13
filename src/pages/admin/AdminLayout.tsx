@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { LayoutDashboard, Package, ShoppingCart, ClipboardList, MessagesSquare, Newspaper, Images, LogOut, ExternalLink, RotateCcw, Menu, X, FlaskConical } from 'lucide-react'
+import { LayoutDashboard, Package, Handshake, ClipboardList, MessagesSquare, Newspaper, Images, LogOut, ExternalLink, RotateCcw, Menu, X, FlaskConical } from 'lucide-react'
 import { Logo } from '@/components/ui/Brand'
 import { LangSwitch } from '@/components/layout/Header'
 import { useAuth } from '@/context/AuthContext'
@@ -23,7 +23,7 @@ export default function AdminLayout() {
 
   const links = [
     { to: '/admin', I: LayoutDashboard, l: t('admin.dashboard'), end: true },
-    { to: '/admin/orders', I: ShoppingCart, l: t('admin.orders') },
+    { to: '/admin/trade-enquiries', I: Handshake, l: t('admin.orders') },
     { to: '/admin/products', I: Package, l: t('admin.products') },
     { to: '/admin/registrations', I: ClipboardList, l: t('admin.registrations') },
     { to: '/admin/enquiries', I: MessagesSquare, l: t('admin.enquiries') },

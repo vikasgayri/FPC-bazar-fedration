@@ -116,8 +116,8 @@ export const initiatives: Initiative[] = [
         hi: 'मज़बूत आपूर्ति श्रृंखला किसान से सीधे बाज़ार तक जुड़ाव बनाती है — बेहतर दाम और बिचौलियों पर निर्भरता कम।',
       },
       {
-        en: 'The FPC Bazaar digital marketplace lets member FPOs, SHGs and dairies list products, reach new buyers and receive digital payments.',
-        hi: 'FPC बाजार डिजिटल मंडी से सदस्य FPO, SHG और डेयरियां अपने उत्पाद सूचीबद्ध कर नए खरीदारों तक पहुंचती हैं।',
+        en: 'On FPC Bazaar, member FPOs, SHGs and dairies list their products and receive verified buyer enquiries. The federation makes the connection — the FPO quotes and sells directly to the buyer.',
+        hi: 'FPC बाजार पर सदस्य FPO, SHG और डेयरियां अपने उत्पाद सूचीबद्ध कर जांची हुई खरीदार पूछताछ पाती हैं। फेडरेशन जोड़ता है — FPO सीधे खरीदार को कोटेशन देकर बेचता है।',
       },
     ],
     highlights: [
@@ -146,7 +146,7 @@ export const initiatives: Initiative[] = [
         hi: 'फेडरेशन महिला स्वयं सहायता समूहों की क्षमता को खाद्य प्रसंस्करण, हस्तशिल्प, जूट व प्राकृतिक रेशा उत्पादों तथा गौशाला-आधारित वस्तुओं में बढ़ाता है।',
       },
       {
-        en: 'SHG products are showcased at exhibitions and listed on the FPC Bazaar marketplace so that women earn directly from every sale.',
+        en: 'SHG products are showcased at exhibitions and listed on FPC Bazaar, where buyers contact the groups directly — so women earn the full value of every sale.',
         hi: 'SHG उत्पाद प्रदर्शनियों और FPC बाजार मार्केटप्लेस पर उपलब्ध कराए जाते हैं ताकि हर बिक्री से महिलाओं को सीधी आय हो।',
       },
     ],
@@ -282,8 +282,8 @@ export const initiatives: Initiative[] = [
     },
     body: [
       {
-        en: 'The federation’s objective is to work with 1,000 FPOs to create employment for 10,000 youth. Young people are trained in agri-tech, dairy and organic farming, and supported to launch their own enterprises.',
-        hi: 'फेडरेशन का उद्देश्य 1000 FPO के साथ मिलकर 10,000 युवाओं को रोजगार देना है। युवाओं को एग्री-टेक, डेयरी और जैविक खेती में प्रशिक्षित कर अपना उद्यम शुरू करने में सहायता दी जाती है।',
+        en: 'Working through its network of 6,000+ FPOs across 17 states, the federation aims to create employment for 10,000 youth. Young people are trained in agri-tech, dairy and organic farming, and supported to launch their own enterprises.',
+        hi: '17 राज्यों के 6,000+ FPO के अपने नेटवर्क के माध्यम से फेडरेशन का लक्ष्य 10,000 युवाओं को रोजगार देना है। युवाओं को एग्री-टेक, डेयरी और जैविक खेती में प्रशिक्षित कर अपना उद्यम शुरू करने में सहायता दी जाती है।',
       },
     ],
     highlights: [
@@ -294,7 +294,7 @@ export const initiatives: Initiative[] = [
     ],
     stats: [
       { value: '10,000', label: { en: 'Youth employment target', hi: 'युवा रोजगार लक्ष्य' } },
-      { value: '1,000', label: { en: 'Partner FPOs', hi: 'साझेदार FPO' } },
+      { value: '6,000+', label: { en: 'FPOs in network', hi: 'नेटवर्क में FPO' } },
     ],
     image: real.trainingCertificates,
     hero: real.fpoTraining1,

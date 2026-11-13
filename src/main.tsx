@@ -4,16 +4,16 @@ import './index.css'
 import './i18n'
 import App from './App'
 import { AuthProvider } from '@/context/AuthContext'
-import { CartProvider } from '@/context/CartContext'
+import { EnquiryListProvider } from '@/context/EnquiryListContext'
 import { ToastProvider } from '@/context/ToastContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ToastProvider>
       <AuthProvider>
-        <CartProvider>
+        <EnquiryListProvider>
           <App />
-        </CartProvider>
+        </EnquiryListProvider>
       </AuthProvider>
     </ToastProvider>
   </StrictMode>,

@@ -22,6 +22,8 @@ export const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
 
-export const discountPct = (price: number, mrp: number) => (mrp > price ? Math.round(((mrp - price) / mrp) * 100) : 0)
 
 export const cn = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(' ')
+
+/** Sensible +/- step for bulk quantities (moq 500 → 50, moq 25 → 5). */
+export const qtyStep = (moq: number) => Math.max(1, 10 ** Math.floor(Math.log10(Math.max(1, moq))) / 2)

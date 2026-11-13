@@ -19,12 +19,13 @@ export const endpoints = {
     update: (id: string) => `/admin/products/${id}`,
     remove: (id: string) => `/admin/products/${id}`,
   },
-  orders: {
-    create: '/orders',
-    mine: '/orders/me',
-    byNumber: (no: string) => `/orders/number/${no}`,
-    adminList: '/admin/orders',
-    updateStatus: (id: string) => `/admin/orders/${id}/status`,
+  /** Buyer → FPO market-linkage enquiries (FPC Bazaar). No orders/payments in this model. */
+  tradeEnquiries: {
+    create: '/trade-enquiries',
+    mine: '/trade-enquiries/me',
+    byNumber: (no: string) => `/trade-enquiries/number/${no}`,
+    adminList: '/admin/trade-enquiries',
+    updateStatus: (id: string) => `/admin/trade-enquiries/${id}/status`,
   },
   registrations: {
     create: '/registrations',

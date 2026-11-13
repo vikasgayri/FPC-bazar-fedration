@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronRight, FlaskConical, Info, Loader2, Star } from 'lucide-react'
+import { ChevronRight, FlaskConical, Info, Loader2 } from 'lucide-react'
 import { cn } from '@/utils/format'
 import { Reveal } from './Motion'
 import { useLang } from '@/hooks/useLang'
@@ -112,16 +112,6 @@ export function PageLoader() {
   )
 }
 
-export function Stars({ value, className }: { value: number; className?: string }) {
-  return (
-    <span className={cn('inline-flex items-center gap-0.5', className)} aria-label={`${value} out of 5`}>
-      {[1, 2, 3, 4, 5].map((i) => (
-        <Star key={i} className={cn('h-3.5 w-3.5', i <= Math.round(value) ? 'fill-gold-500 text-gold-500' : 'text-navy-900/15')} />
-      ))}
-    </span>
-  )
-}
-
 export function EmptyState({ icon, title, text, action }: { icon: ReactNode; title: string; text?: string; action?: ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-navy-900/15 bg-white px-6 py-16 text-center">
@@ -134,12 +124,10 @@ export function EmptyState({ icon, title, text, action }: { icon: ReactNode; tit
 }
 
 const statusColor: Record<string, string> = {
-  PLACED: 'bg-navy-100 text-navy-700',
-  CONFIRMED: 'bg-sky-100 text-sky-700',
-  PACKED: 'bg-violet-100 text-violet-700',
-  SHIPPED: 'bg-amber-100 text-amber-700',
-  DELIVERED: 'bg-leaf-100 text-leaf-700',
-  CANCELLED: 'bg-red-100 text-red-700',
+  RECEIVED: 'bg-saffron-100 text-saffron-600',
+  SHARED_WITH_FPO: 'bg-sky-100 text-sky-700',
+  QUOTE_SENT: 'bg-violet-100 text-violet-700',
+  LINKED: 'bg-leaf-100 text-leaf-700',
   PENDING: 'bg-amber-100 text-amber-700',
   UNDER_REVIEW: 'bg-sky-100 text-sky-700',
   APPROVED: 'bg-leaf-100 text-leaf-700',
@@ -150,8 +138,8 @@ const statusColor: Record<string, string> = {
 }
 export function StatusBadge({ status }: { status: string }) {
   return (
-    <span className={cn('inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider', statusColor[status] ?? 'bg-gray-100 text-gray-600')}>
-      {status.replace('_', ' ')}
+    <span className={cn('inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider', statusColor[status] ?? 'bg-gray-100 text-gray-600')}>
+      {status.replace(/_/g, ' ')}
     </span>
   )
 }

@@ -57,17 +57,20 @@ export interface Product {
   name: LText
   description: LText
   category: ProductCategory
+  /** Indicative price per unit as shared by the FPO — final rate is quoted by the FPO. */
   price: number
-  mrp: number
+  /** Trading unit, e.g. "kg", "litre", "40 kg bag". */
   unit: string
-  stock: number
+  /** Minimum enquiry quantity, in units. */
+  moq: number
+  /** Approx. monthly supply capacity, in units. 0 = currently out of season. */
+  capacity: number
   image: string
   gallery?: string[]
-  /** Producer organisation (FPO / SHG / Dairy / Gaushala) */
+  /** Producer organisation (FPO / SHG / Dairy / Gaushala) that sells directly to the buyer. */
   producer: string
+  /** "District, State" */
   origin: string
-  rating: number
-  reviews: number
   tags: string[]
   featured?: boolean
   isDemo: boolean
@@ -78,49 +81,62 @@ export interface Product {
 export interface ProductQuery {
   q?: string
   category?: ProductCategory | 'all'
-  sort?: 'featured' | 'price-asc' | 'price-desc' | 'rating' | 'newest'
+  sort?: 'featured' | 'price-asc' | 'price-desc' | 'newest'
+  state?: string
   minPrice?: number
   maxPrice?: number
-  inStock?: boolean
+  available?: boolean
 }
 
-export interface CartItem {
+/** One product in the buyer's enquiry list (kept in the browser until sent). */
+export interface EnquiryListItem {
   productId: string
   qty: number
 }
 
-export type OrderStatus = 'PLACED' | 'CONFIRMED' | 'PACKED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED'
-export type PaymentMethod = 'UPI' | 'CARD' | 'NETBANKING' | 'COD'
+/**
+ * FPC Bazaar is a market-linkage platform, not a seller.
+ * A buyer sends a trade enquiry; the federation verifies it and connects the buyer
+ * with the producing FPOs, who quote and sell directly. No payment passes through the federation.
+ */
+export type BuyerType = 'RETAILER' | 'WHOLESALER' | 'PROCESSOR' | 'EXPORTER' | 'INSTITUTION' | 'HORECA' | 'OTHER'
+export type TradeEnquiryStatus = 'RECEIVED' | 'SHARED_WITH_FPO' | 'QUOTE_SENT' | 'LINKED' | 'CLOSED'
+export type SupplyFrequency = 'ONE_TIME' | 'MONTHLY' | 'SEASONAL'
 
-export interface OrderLine {
+export interface TradeEnquiryLine {
   productId: string
   name: string
   image: string
-  price: number
-  qty: number
+  producer: string
+  origin: string
   unit: string
+  qty: number
+  /** Indicative price per unit at the time of enquiry. */
+  price: number
 }
 
-export interface Order {
+export interface TradeEnquiry {
   id: string
   number: string
   userId: string | null
-  customerName: string
+  buyerName: string
+  organisation?: string
+  buyerType: BuyerType
   email: string
   phone: string
-  address: Address
-  lines: OrderLine[]
-  subtotal: number
-  shipping: number
-  total: number
-  paymentMethod: PaymentMethod
-  paymentStatus: 'SIMULATED_PAID' | 'COD_PENDING'
-  /** Simulated transaction reference — never a real gateway id. */
-  paymentRef: string
-  status: OrderStatus
+  city: string
+  state: string
+  pincode?: string
+  frequency: SupplyFrequency
+  requiredBy?: string
+  message?: string
+  lines: TradeEnquiryLine[]
+  /** Sum of qty × indicative price — for reference only, not an invoice. */
+  indicativeValue: number
+  status: TradeEnquiryStatus
   isDemo: true
   createdAt: string
-  history: { status: OrderStatus; at: string; note?: string }[]
+  history: { status: TradeEnquiryStatus; at: string; note?: string }[]
 }
 
 export type RegistrationType = 'FARMER' | 'FPO' | 'SHG' | 'DAIRY'
@@ -183,19 +199,21 @@ export interface GalleryItem {
 }
 
 export interface DashboardStats {
-  revenue: number
-  orders: number
-  pendingOrders: number
+  /** Indicative value of open trade enquiries (not revenue — the federation does not sell). */
+  pipelineValue: number
+  tradeEnquiries: number
+  openTradeEnquiries: number
+  linkedTradeEnquiries: number
   products: number
-  lowStock: number
+  seasonal: number
   registrations: number
   pendingRegistrations: number
   enquiries: number
   newEnquiries: number
   byType: Record<RegistrationType, number>
-  recentOrders: Order[]
+  recentTradeEnquiries: TradeEnquiry[]
   recentRegistrations: Registration[]
-  salesByDay: { day: string; total: number }[]
+  enquiriesByDay: { day: string; total: number }[]
 }
 
 export interface Paged<T> {

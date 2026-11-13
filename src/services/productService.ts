@@ -7,6 +7,9 @@ import { slugify, uid } from '@/utils/format'
 
 const store = collection<Product>('products', seedProducts)
 
+/** State part of "District, State" — used for the state filter. */
+export const stateOf = (p: Pick<Product, 'origin'>) => p.origin.split(',').pop()!.trim()
+
 export type ProductInput = Omit<Product, 'id' | 'slug' | 'createdAt' | 'isDemo'>
 
 export const productService = {
@@ -21,7 +24,8 @@ export const productService = {
         [p.name.en, p.name.hi ?? '', p.producer, p.origin, p.category, ...p.tags].join(' ').toLowerCase().includes(q),
       )
     if (query.category && query.category !== 'all') items = items.filter((p) => p.category === query.category)
-    if (query.inStock) items = items.filter((p) => p.stock > 0)
+    if (query.available) items = items.filter((p) => p.capacity > 0)
+    if (query.state) items = items.filter((p) => stateOf(p) === query.state)
     if (query.minPrice != null) items = items.filter((p) => p.price >= query.minPrice!)
     if (query.maxPrice != null) items = items.filter((p) => p.price <= query.maxPrice!)
     switch (query.sort) {
@@ -30,9 +34,6 @@ export const productService = {
         break
       case 'price-desc':
         items = [...items].sort((a, b) => b.price - a.price)
-        break
-      case 'rating':
-        items = [...items].sort((a, b) => b.rating - a.rating)
         break
       case 'newest':
         items = [...items].sort((a, b) => b.createdAt.localeCompare(a.createdAt))
@@ -56,7 +57,7 @@ export const productService = {
     return p
   },
 
-  /** Synchronous lookup used by the cart to hydrate lines from ids. */
+  /** Synchronous lookup used by the enquiry list to hydrate lines from ids. */
   getManyByIdSync(ids: string[]): Product[] {
     const all = store.all()
     return ids.map((id) => all.find((p) => p.id === id)).filter(Boolean) as Product[]
@@ -85,15 +86,5 @@ export const productService = {
     if (!USE_MOCK) return http.delete(endpoints.products.remove(id))
     await mockDelay()
     store.save(store.all().filter((p) => p.id !== id))
-  },
-
-  /** Internal: decrement stock after a demo order. */
-  _decrementStock(lines: { productId: string; qty: number }[]) {
-    const all = store.all()
-    lines.forEach((l) => {
-      const p = all.find((x) => x.id === l.productId)
-      if (p) p.stock = Math.max(0, p.stock - l.qty)
-    })
-    store.save(all)
   },
 }

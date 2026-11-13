@@ -16,6 +16,7 @@ export default function Footer() {
   const quick = [
     { to: '/about', label: t('nav.about') },
     { to: '/initiatives', label: t('nav.initiatives') },
+    { to: '/fpo-services', label: t('nav.services') },
     { to: '/bazaar', label: t('nav.bazaar') },
     { to: '/news', label: t('nav.news') },
     { to: '/gallery', label: t('nav.gallery') },

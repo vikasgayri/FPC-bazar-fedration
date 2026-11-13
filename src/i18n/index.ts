@@ -2,7 +2,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import en from './en'
 import hi from './hi'
-import { prefService } from '@/services/cartService'
+import { prefService } from '@/services/prefService'
 
 const initial = prefService.getLang() ?? (navigator.language?.startsWith('hi') ? 'hi' : 'en')
 

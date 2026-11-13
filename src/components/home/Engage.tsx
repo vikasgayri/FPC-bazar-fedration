@@ -31,7 +31,7 @@ export function BazaarShowcase() {
             </Link>
           }
         />
-        <DemoNotice className="mt-8">{t('shop.demoBanner')}</DemoNotice>
+        <DemoNotice className="mt-8">{t('shop.howBanner')}</DemoNotice>
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {loading ? [...Array(8)].map((_, i) => <ProductSkeleton key={i} />) : data?.map((p) => <ProductCard key={p.id} p={p} />)}
         </div>

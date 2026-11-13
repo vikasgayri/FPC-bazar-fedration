@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Search, SlidersHorizontal, X, PackageSearch, Truck, ShieldCheck, Sprout } from 'lucide-react'
+import { ArrowRight, Search, SlidersHorizontal, X, PackageSearch, Handshake, ShieldCheck, Sprout, Store } from 'lucide-react'
 import PageHero from '@/components/ui/PageHero'
 import ProductCard, { ProductSkeleton } from '@/components/shop/ProductCard'
 import { DemoNotice, EmptyState } from '@/components/ui/Primitives'
 import { useAsync } from '@/hooks/useAsync'
 import { useLang } from '@/hooks/useLang'
 import { useDocumentTitle, useLockBody } from '@/hooks/useUi'
-import { productService } from '@/services/productService'
+import { productService, stateOf } from '@/services/productService'
 import { categories } from '@/mocks/products'
 import { stock } from '@/data/images'
 import type { ProductCategory, ProductQuery } from '@/types'
@@ -26,11 +26,13 @@ export default function Shop() {
     q: params.get('q') ?? undefined,
     category: (params.get('cat') as ProductCategory) ?? 'all',
     sort: (params.get('sort') as ProductQuery['sort']) ?? 'featured',
-    inStock: params.get('stock') === '1',
-    maxPrice: params.get('max') ? Number(params.get('max')) : undefined,
+    available: params.get('avail') === '1',
+    state: params.get('state') ?? undefined,
   }
   const key = params.toString()
   const { data, loading } = useAsync(() => productService.list(query), [key])
+  const all = useAsync(() => productService.list(), [])
+  const states = useMemo(() => [...new Set((all.data ?? []).map(stateOf))].filter((x) => x !== 'India').sort(), [all.data])
 
   // debounce search → URL
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Shop() {
     else next.set(k, v)
     setParams(next, { replace: true })
   }
-  const activeCount = ['cat', 'stock', 'max', 'q'].filter((k) => params.get(k)).length
+  const activeCount = ['cat', 'avail', 'state', 'q'].filter((k) => params.get(k)).length
 
   const Filters = useMemo(
     () =>
@@ -79,27 +81,21 @@ export default function Shop() {
               </ul>
             </div>
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-600">{t('shop.priceRange')}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {[
-                  { v: null, l: t('common.all') },
-                  { v: '200', l: '≤ ₹200' },
-                  { v: '500', l: '≤ ₹500' },
-                  { v: '1000', l: '≤ ₹1,000' },
-                ].map((o) => (
-                  <button
-                    key={o.l}
-                    onClick={() => set('max', o.v)}
-                    className={cn('rounded-full border px-3.5 py-1.5 text-xs font-bold', (params.get('max') ?? null) === o.v ? 'border-navy-900 bg-navy-900 text-white' : 'border-navy-900/15 text-navy-900')}
-                  >
-                    {o.l}
-                  </button>
+              <label htmlFor="state-filter" className="text-xs font-bold uppercase tracking-[0.2em] text-gold-600">
+                {t('shop.state')}
+              </label>
+              <select id="state-filter" value={params.get('state') ?? ''} onChange={(e) => set('state', e.target.value || null)} className="field mt-4 !rounded-xl !py-2.5 text-sm font-semibold">
+                <option value="">{t('shop.allStates')}</option>
+                {states.map((st) => (
+                  <option key={st} value={st}>
+                    {st}
+                  </option>
                 ))}
-              </div>
+              </select>
             </div>
             <label className="flex cursor-pointer items-center gap-3 text-sm font-semibold text-navy-900">
-              <input type="checkbox" checked={!!query.inStock} onChange={(e) => set('stock', e.target.checked ? '1' : null)} className="h-4 w-4 accent-navy-900" />
-              {t('shop.inStockOnly')}
+              <input type="checkbox" checked={!!query.available} onChange={(e) => set('avail', e.target.checked ? '1' : null)} className="h-4 w-4 accent-navy-900" />
+              {t('shop.availableOnly')}
             </label>
             {activeCount > 0 && (
               <button
@@ -116,12 +112,12 @@ export default function Shop() {
         )
       },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [key, t, L],
+    [key, t, L, states],
   )
 
   return (
     <>
-      <PageHero title={t('shop.title')} text={t('shop.subtitle')} image={stock.vegMarket} fallback="/images/real/produce-exhibit.jpg" crumbs={[{ label: t('nav.bazaar') }]} eyebrow="डिजिटल मंडी • किसान से सीधे आपके घर तक" size="sm">
+      <PageHero title={t('shop.title')} text={t('shop.subtitle')} image={stock.vegMarket} fallback="/images/real/produce-exhibit.jpg" crumbs={[{ label: t('nav.bazaar') }]} eyebrow="मार्केट लिंकेज • FPO से सीधे खरीदार तक" size="sm">
         <form
           onSubmit={(e) => e.preventDefault()}
           className="flex max-w-xl items-center gap-3 rounded-full bg-white p-1.5 pl-5 shadow-lift"
@@ -140,9 +136,9 @@ export default function Shop() {
       <div className="border-b border-navy-900/5 bg-white">
         <div className="container grid grid-cols-1 gap-4 py-5 text-sm sm:grid-cols-3">
           {[
-            { I: Sprout, t: t('shop.support') },
-            { I: Truck, t: t('shop.deliveryNote') },
-            { I: ShieldCheck, t: t('checkout.simulated') + ' — ' + t('common.demo') },
+            { I: Sprout, t: t('shop.direct') },
+            { I: ShieldCheck, t: t('shop.verifiedNote') },
+            { I: Handshake, t: t('shop.linkageNote') },
           ].map(({ I, t: x }, i) => (
             <p key={i} className="flex items-center gap-3 font-semibold text-navy-900">
               <I className="h-5 w-5 shrink-0 text-leaf-600" /> {x}
@@ -153,7 +149,19 @@ export default function Shop() {
 
       <section className="bg-cream-50 py-12 sm:py-16">
         <div className="container">
-          <DemoNotice>{t('shop.demoBanner')}</DemoNotice>
+          <div className="rounded-[1.5rem] bg-navy-900 p-6 text-white sm:p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">{t('shop.howTitle')}</p>
+            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-white/75">{t('shop.howBanner')}</p>
+            <ol className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[t('shop.how1'), t('shop.how2'), t('shop.how3'), t('shop.how4')].map((x, i) => (
+                <li key={x} className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 text-sm font-semibold">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold-500 text-xs font-extrabold text-navy-950">{i + 1}</span>
+                  {x}
+                </li>
+              ))}
+            </ol>
+          </div>
+          <DemoNotice className="mt-4">{t('shop.demoBanner')}</DemoNotice>
           <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[250px_1fr]">
             <aside className="hidden lg:block">
               <div className="sticky top-28 rounded-2xl bg-white p-6 shadow-card">
@@ -174,7 +182,6 @@ export default function Shop() {
                     <option value="featured">{t('shop.sortFeatured')}</option>
                     <option value="price-asc">{t('shop.sortPriceAsc')}</option>
                     <option value="price-desc">{t('shop.sortPriceDesc')}</option>
-                    <option value="rating">{t('shop.sortRating')}</option>
                     <option value="newest">{t('shop.sortNewest')}</option>
                   </select>
                 </div>
@@ -205,6 +212,23 @@ export default function Shop() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-14">
+        <div className="container flex flex-col items-start justify-between gap-6 rounded-[1.75rem] bg-leaf-50 p-8 sm:flex-row sm:items-center sm:p-10">
+          <div className="flex items-start gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-leaf-600 text-white">
+              <Store className="h-6 w-6" />
+            </span>
+            <div>
+              <p className="font-display text-2xl text-navy-900">{t('shop.listTitle')}</p>
+              <p className="mt-1 max-w-xl text-sm text-ink-soft">{t('shop.listText')}</p>
+            </div>
+          </div>
+          <Link to="/register?type=FPO" className="btn-primary shrink-0">
+            {t('shop.listCta')} <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 

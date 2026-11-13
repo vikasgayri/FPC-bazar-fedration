@@ -26,7 +26,15 @@ export const mainNav: NavItem[] = [
     ],
   },
   { labelKey: 'nav.initiatives', to: '/initiatives', mega: 'initiatives' },
-  { labelKey: 'nav.bazaar', to: '/bazaar' },
+  {
+    labelKey: 'nav.services',
+    to: '/fpo-services',
+    children: [
+      { key: 'services', to: '/fpo-services', label: { en: 'Services for FPOs', hi: 'FPO के लिए सेवाएं' } },
+      { key: 'bazaar', to: '/bazaar', label: { en: 'FPC Bazaar — buy from FPOs', hi: 'FPC बाजार — FPO से खरीदें' } },
+      { key: 'register', to: '/register?type=FPO', label: { en: 'Register your FPO', hi: 'अपना FPO पंजीकृत करें' } },
+    ],
+  },
   {
     labelKey: 'nav.media',
     to: '/news',

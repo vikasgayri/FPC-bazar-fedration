@@ -1,28 +1,28 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Heart, MapPin, ShieldCheck, Sprout, Truck, Users, PackageX } from 'lucide-react'
+import { CalendarClock, Heart, Handshake, MapPin, PackageCheck, ShieldCheck, Sprout, Users, PackageX } from 'lucide-react'
 import Img from '@/components/ui/Img'
-import { Breadcrumb, DemoNotice, DemoPill, EmptyState, PageLoader, Stars } from '@/components/ui/Primitives'
+import { Breadcrumb, DemoNotice, DemoPill, EmptyState, PageLoader } from '@/components/ui/Primitives'
 import ProductCard from '@/components/shop/ProductCard'
-import { QtyStepper } from '@/components/shop/CartDrawer'
+import { QtyInput } from '@/components/shop/EnquiryDrawer'
 import { useAsync } from '@/hooks/useAsync'
 import { useLang } from '@/hooks/useLang'
 import { useDocumentTitle } from '@/hooks/useUi'
 import { productService } from '@/services/productService'
-import { useCart } from '@/context/CartContext'
+import { useEnquiryList } from '@/context/EnquiryListContext'
 import { useToast } from '@/context/ToastContext'
 import { categories } from '@/mocks/products'
-import { cn, discountPct, inr } from '@/utils/format'
+import { cn, inr, qtyStep } from '@/utils/format'
 
 export default function ProductDetail() {
   const { slug = '' } = useParams()
   const { t, L } = useLang()
   const nav = useNavigate()
-  const { add, toggleWish, isWished, setDrawerOpen } = useCart()
+  const { add, toggleWish, isWished, setDrawerOpen } = useEnquiryList()
   const toast = useToast()
   const { data: p, loading, error } = useAsync(() => productService.getBySlug(slug), [slug])
   const related = useAsync(async () => (p ? (await productService.list({ category: p.category })).filter((x) => x.id !== p.id).slice(0, 4) : []), [p?.id])
-  const [qty, setQty] = useState(1)
+  const [qtyState, setQty] = useState<{ id: string; qty: number } | null>(null)
   const [img, setImg] = useState(0)
   useDocumentTitle(p ? L(p.name) : t('shop.title'))
 
@@ -30,14 +30,15 @@ export default function ProductDetail() {
   if (error || !p)
     return (
       <div className="container pb-24 pt-44">
-        <EmptyState icon={<PackageX className="h-7 w-7" />} title="Product not found" action={<Link to="/bazaar" className="btn-primary">{t('cart.continue')}</Link>} />
+        <EmptyState icon={<PackageX className="h-7 w-7" />} title="Product not found" action={<Link to="/bazaar" className="btn-primary">{t('elist.continue')}</Link>} />
       </div>
     )
 
-  const off = discountPct(p.price, p.mrp)
+  const qty = qtyState?.id === p.id ? qtyState.qty : p.moq
   const gallery = p.gallery?.length ? p.gallery : [p.image]
   const cat = categories.find((c) => c.key === p.category)
-  const out = p.stock <= 0
+  const seasonal = p.capacity <= 0
+  const n = (v: number) => v.toLocaleString('en-IN')
 
   return (
     <>
@@ -68,82 +69,78 @@ export default function ProductDetail() {
               <DemoPill label={t('shop.demoListing')} />
             </div>
             <h1 className="mt-4 font-display text-[2.2rem] leading-tight text-navy-900 sm:text-[2.8rem]">{L(p.name)}</h1>
-            <div className="mt-3 flex items-center gap-3 text-sm text-ink-mute">
-              <Stars value={p.rating} /> {p.rating} • {t('shop.reviews', { count: p.reviews })}
-            </div>
-            <div className="mt-6 flex items-end gap-3">
-              <p className="font-display text-4xl text-navy-900">{inr(p.price)}</p>
-              {off > 0 && (
-                <>
-                  <p className="pb-1 text-lg text-ink-mute line-through">{inr(p.mrp)}</p>
-                  <span className="mb-1.5 rounded-full bg-leaf-600 px-2.5 py-1 text-xs font-bold text-white">{t('shop.off', { pct: off })}</span>
-                </>
-              )}
-            </div>
-            <p className="mt-1 text-sm text-ink-mute">
-              {t('shop.unit')}: {p.unit}
+            <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-leaf-700">
+              <Users className="h-4 w-4" /> {p.producer}
             </p>
+            <div className="mt-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-ink-mute">{t('shop.indicative')}</p>
+              <p className="mt-1 font-display text-4xl text-navy-900">
+                {inr(p.price)} <span className="font-sans text-base font-semibold text-ink-mute">{t('shop.perUnit', { unit: p.unit })}</span>
+              </p>
+            </div>
             <p className="lead mt-6">{L(p.description)}</p>
 
             <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-2xl bg-white p-4 shadow-card">
-                <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-mute">
-                  <Users className="h-4 w-4 text-gold-600" /> {t('shop.producer')}
-                </dt>
-                <dd className="mt-1 font-semibold text-navy-900">{p.producer}</dd>
-              </div>
-              <div className="rounded-2xl bg-white p-4 shadow-card">
-                <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-mute">
-                  <MapPin className="h-4 w-4 text-gold-600" /> {t('shop.origin')}
-                </dt>
-                <dd className="mt-1 font-semibold text-navy-900">{p.origin}</dd>
-              </div>
+              {[
+                { I: Users, k: t('shop.producer'), v: p.producer },
+                { I: MapPin, k: t('shop.origin'), v: p.origin },
+                { I: PackageCheck, k: t('shop.moq'), v: `${n(p.moq)} ${p.unit}` },
+                { I: CalendarClock, k: t('shop.capacity'), v: seasonal ? t('shop.seasonal') : t('shop.perMonth', { qty: `${n(p.capacity)} ${p.unit}` }) },
+              ].map(({ I, k, v }) => (
+                <div key={k} className="rounded-2xl bg-white p-4 shadow-card">
+                  <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-mute">
+                    <I className="h-4 w-4 text-gold-600" /> {k}
+                  </dt>
+                  <dd className="mt-1 font-semibold text-navy-900">{v}</dd>
+                </div>
+              ))}
             </dl>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <QtyStepper value={qty} max={Math.max(1, p.stock)} onChange={(v) => setQty(Math.max(1, v))} />
-              <button
-                disabled={out}
-                onClick={() => {
-                  add(p.id, qty)
-                  setDrawerOpen(true)
-                }}
-                className="btn-primary flex-1 !py-3.5 sm:flex-none"
-              >
-                {out ? t('shop.outOfStock') : t('shop.addToCart')}
-              </button>
-              <button
-                disabled={out}
-                onClick={() => {
-                  add(p.id, qty)
-                  nav('/bazaar/checkout')
-                }}
-                className="btn-gold flex-1 !py-3.5 sm:flex-none"
-              >
-                {t('shop.buyNow')}
-              </button>
-              <button
-                onClick={() => {
-                  toggleWish(p.id)
-                  toast('info', isWished(p.id) ? t('shop.wishlistRemove') : t('shop.wishlistAdd'))
-                }}
-                className={cn('grid h-12 w-12 place-items-center rounded-full border', isWished(p.id) ? 'border-saffron-500 text-saffron-500' : 'border-navy-900/15 text-navy-900')}
-                aria-label={t('shop.wishlistAdd')}
-              >
-                <Heart className={cn('h-5 w-5', isWished(p.id) && 'fill-current')} />
-              </button>
+            <div className="mt-8">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-mute">{t('shop.qty')}</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <QtyInput value={qty} step={qtyStep(p.moq)} unit={p.unit.length <= 8 ? p.unit : undefined} onChange={(v) => setQty({ id: p.id, qty: Math.max(1, v) })} />
+                <button
+                  onClick={() => {
+                    add(p.id, qty)
+                    setDrawerOpen(true)
+                  }}
+                  className="btn-primary flex-1 !py-3.5 sm:flex-none"
+                >
+                  {t('shop.addToEnquiry')}
+                </button>
+                <button
+                  onClick={() => {
+                    add(p.id, qty)
+                    nav('/bazaar/enquiry/send')
+                  }}
+                  className="btn-gold flex-1 !py-3.5 sm:flex-none"
+                >
+                  {t('shop.enquireNow')}
+                </button>
+                <button
+                  onClick={() => {
+                    toggleWish(p.id)
+                    toast('info', isWished(p.id) ? t('shop.wishlistRemove') : t('shop.wishlistAdd'))
+                  }}
+                  className={cn('grid h-12 w-12 place-items-center rounded-full border', isWished(p.id) ? 'border-saffron-500 text-saffron-500' : 'border-navy-900/15 text-navy-900')}
+                  aria-label={t('shop.wishlistAdd')}
+                >
+                  <Heart className={cn('h-5 w-5', isWished(p.id) && 'fill-current')} />
+                </button>
+              </div>
+              {qty < p.moq && <p className="mt-3 text-sm font-semibold text-saffron-600">{t('elist.belowMin', { qty: `${n(p.moq)} ${p.unit}` })}</p>}
             </div>
-            {!out && p.stock < 15 && <p className="mt-3 text-sm font-semibold text-saffron-600">{t('shop.onlyLeft', { count: p.stock })}</p>}
 
             <ul className="mt-8 space-y-3 border-t border-navy-900/10 pt-6 text-sm text-ink-soft">
               <li className="flex items-center gap-3">
-                <Sprout className="h-4 w-4 text-leaf-600" /> {t('shop.support')}
+                <Sprout className="h-4 w-4 shrink-0 text-leaf-600" /> {t('shop.direct')}
               </li>
               <li className="flex items-center gap-3">
-                <Truck className="h-4 w-4 text-leaf-600" /> {t('shop.deliveryNote')}
+                <Handshake className="h-4 w-4 shrink-0 text-leaf-600" /> {t('shop.linkageNote')}
               </li>
               <li className="flex items-center gap-3">
-                <ShieldCheck className="h-4 w-4 text-leaf-600" /> {t('checkout.simulatedText')}
+                <ShieldCheck className="h-4 w-4 shrink-0 text-leaf-600" /> {t('shop.verifiedNote')}
               </li>
             </ul>
             <DemoNotice className="mt-6">{t('shop.demoBanner')}</DemoNotice>

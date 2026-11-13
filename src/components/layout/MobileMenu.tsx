@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, Heart, Mail, Phone, ShoppingBag, User, X } from 'lucide-react'
+import { ChevronDown, ClipboardList, Heart, Mail, Phone, User, X } from 'lucide-react'
 import { Logo } from '@/components/ui/Brand'
 import { LangSwitch } from './Header'
 import { useLang } from '@/hooks/useLang'
@@ -84,8 +84,8 @@ export default function MobileMenu({ open, onClose }: { open: boolean; onClose: 
               </ul>
 
               <div className="mt-6 grid grid-cols-3 gap-2 text-xs font-semibold">
-                <Link to="/bazaar/cart" onClick={onClose} className="flex flex-col items-center gap-2 rounded-2xl bg-white/5 py-4">
-                  <ShoppingBag className="h-5 w-5 text-gold-400" /> {t('nav.cart')}
+                <Link to="/bazaar/enquiry" onClick={onClose} className="flex flex-col items-center gap-2 rounded-2xl bg-white/5 py-4">
+                  <ClipboardList className="h-5 w-5 text-gold-400" /> {t('nav.cart')}
                 </Link>
                 <Link to="/wishlist" onClick={onClose} className="flex flex-col items-center gap-2 rounded-2xl bg-white/5 py-4">
                   <Heart className="h-5 w-5 text-gold-400" /> {t('nav.wishlist')}

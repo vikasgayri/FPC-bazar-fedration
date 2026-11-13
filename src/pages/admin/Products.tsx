@@ -17,24 +17,22 @@ import { categories } from '@/mocks/products'
 import type { Product, ProductCategory } from '@/types'
 import { cn, inr } from '@/utils/format'
 
-const schema = z
-  .object({
+const schema = z.object({
     nameEn: z.string().trim().min(3, 'Name required'),
     nameHi: z.string().optional(),
     descEn: z.string().trim().min(10, 'At least 10 characters'),
     descHi: z.string().optional(),
     category: z.string().min(1),
     price: z.coerce.number().positive('Must be > 0'),
-    mrp: z.coerce.number().positive('Must be > 0'),
     unit: z.string().trim().min(1, 'Unit required'),
-    stock: z.coerce.number().int().min(0),
+    moq: z.coerce.number().int().min(1, 'At least 1'),
+    capacity: z.coerce.number().int().min(0),
     producer: z.string().trim().min(2, 'Producer required'),
     origin: z.string().trim().min(2, 'Origin required'),
     image: z.string().min(1, 'Image required'),
     featured: z.boolean(),
     active: z.boolean(),
   })
-  .refine((d) => d.mrp >= d.price, { path: ['mrp'], message: 'MRP must be ≥ price' })
 type Form = z.input<typeof schema>
 type Out = z.output<typeof schema>
 
@@ -45,9 +43,9 @@ const toForm = (p?: Product): Form => ({
   descHi: p?.description.hi ?? '',
   category: p?.category ?? 'grains',
   price: (p?.price ?? '') as unknown as number,
-  mrp: (p?.mrp ?? '') as unknown as number,
   unit: p?.unit ?? '',
-  stock: p?.stock ?? 0,
+  moq: p?.moq ?? 1,
+  capacity: p?.capacity ?? 0,
   producer: p?.producer ?? '',
   origin: p?.origin ?? '',
   image: p?.image ?? '',
@@ -71,17 +69,15 @@ function ProductForm({ initial, onDone }: { initial?: Product; onDone: () => voi
       description: { en: v.descEn, hi: v.descHi || undefined },
       category: v.category as ProductCategory,
       price: v.price,
-      mrp: v.mrp,
       unit: v.unit,
-      stock: v.stock,
+      moq: v.moq,
+      capacity: v.capacity,
       producer: v.producer,
       origin: v.origin,
       image: v.image,
       gallery: [v.image],
       featured: v.featured,
       active: v.active,
-      rating: initial?.rating ?? 4.5,
-      reviews: initial?.reviews ?? 0,
       tags: initial?.tags ?? [],
     }
     if (initial) await productService.update(initial.id, payload)
@@ -97,11 +93,11 @@ function ProductForm({ initial, onDone }: { initial?: Product; onDone: () => voi
       <Textarea label="Description (English)" {...register('descEn')} error={errors.descEn?.message} rows={3} />
       <Textarea label="विवरण (Hindi)" {...register('descHi')} rows={3} />
       <Select label="Category" {...register('category')} options={categories.map((c) => ({ value: c.key, label: c.label.en }))} />
-      <Input label="Pack / unit" {...register('unit')} error={errors.unit?.message} placeholder="1 kg" />
-      <Input label="Price (₹)" inputMode="numeric" {...register('price')} error={errors.price?.message} />
-      <Input label="MRP (₹)" inputMode="numeric" {...register('mrp')} error={errors.mrp?.message} />
-      <Input label="Stock" inputMode="numeric" {...register('stock')} error={errors.stock?.message} />
-      <Input label="Producer (FPO / SHG / Dairy)" {...register('producer')} error={errors.producer?.message} />
+      <Input label="Trading unit" {...register('unit')} error={errors.unit?.message} placeholder="kg, litre, 40 kg bag…" />
+      <Input label="Indicative price per unit (₹)" inputMode="numeric" {...register('price')} error={errors.price?.message} />
+      <Input label="Minimum enquiry quantity" inputMode="numeric" {...register('moq')} error={errors.moq?.message} />
+      <Input label="Monthly supply capacity (0 = out of season)" inputMode="numeric" {...register('capacity')} error={errors.capacity?.message} />
+      <Input label="Producer (FPO / SHG / Dairy)" {...register('producer')} error={errors.producer?.message} wrapClassName="sm:col-span-2" />
       <Input label="Origin" {...register('origin')} error={errors.origin?.message} wrapClassName="sm:col-span-2" placeholder="District, State" />
       <div className="sm:col-span-2">
         <Controller control={control} name="image" render={({ field }) => <ImageField value={field.value} onChange={field.onChange} />} />
@@ -111,7 +107,7 @@ function ProductForm({ initial, onDone }: { initial?: Product; onDone: () => voi
         <input type="checkbox" {...register('featured')} className="h-4 w-4 accent-navy-900" /> Featured on homepage
       </label>
       <label className="flex items-center gap-2 text-sm font-semibold">
-        <input type="checkbox" {...register('active')} className="h-4 w-4 accent-navy-900" /> Visible in store
+        <input type="checkbox" {...register('active')} className="h-4 w-4 accent-navy-900" /> Visible in FPC Bazaar
       </label>
       <div className="flex justify-end gap-2 sm:col-span-2">
         <button type="button" onClick={onDone} className="btn-outline">
@@ -142,7 +138,7 @@ export default function Products() {
     <>
       <PageTitle
         title={t('admin.products')}
-        text="Demo catalogue — changes are saved in this browser only."
+        text="FPO product listings shown in FPC Bazaar (demo — saved in this browser only). Prices are indicative; FPOs quote buyers directly."
         action={
           <button onClick={() => setEdit('new')} className="btn-primary">
             <Plus className="h-4 w-4" /> {t('admin.addProduct')}
@@ -165,7 +161,7 @@ export default function Products() {
         {loading ? (
           <PageLoader />
         ) : (
-          <Table head={['Product', 'Category', 'Price', 'Stock', 'Status', '']} empty={!list.length}>
+          <Table head={['Product', 'Category', 'Indicative price', 'Min. / Capacity', 'Status', '']} empty={!list.length}>
             {list.map((p) => (
               <tr key={p.id} className="hover:bg-cream-50">
                 <td className="px-5 py-3">
@@ -178,8 +174,12 @@ export default function Products() {
                   </div>
                 </td>
                 <td className="px-5 py-3 text-ink-soft">{categories.find((c) => c.key === p.category)?.label.en}</td>
-                <td className="px-5 py-3 font-semibold">{inr(p.price)}</td>
-                <td className={cn('px-5 py-3 font-semibold', p.stock < 10 ? 'text-saffron-600' : 'text-navy-900')}>{p.stock}</td>
+                <td className="px-5 py-3 font-semibold">
+                  {inr(p.price)} <span className="text-xs text-ink-mute">/ {p.unit}</span>
+                </td>
+                <td className={cn('px-5 py-3 text-xs font-semibold', p.capacity <= 0 ? 'text-saffron-600' : 'text-navy-900')}>
+                  {p.moq.toLocaleString('en-IN')} / {p.capacity > 0 ? `${p.capacity.toLocaleString('en-IN')} pm` : 'out of season'}
+                </td>
                 <td className="px-5 py-3">
                   <button
                     onClick={async () => {

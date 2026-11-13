@@ -1,25 +1,23 @@
 import { Link, Navigate } from 'react-router-dom'
-import { LogOut, Package, Heart, Mail, Phone } from 'lucide-react'
+import { LogOut, ClipboardList, Heart, Mail, Phone } from 'lucide-react'
 import PageHero from '@/components/ui/PageHero'
 import Img from '@/components/ui/Img'
 import { DemoNotice, EmptyState, PageLoader, StatusBadge } from '@/components/ui/Primitives'
 import { useAuth } from '@/context/AuthContext'
-import { useCart } from '@/context/CartContext'
+import { useEnquiryList } from '@/context/EnquiryListContext'
 import { useAsync } from '@/hooks/useAsync'
 import { useLang } from '@/hooks/useLang'
 import { useDocumentTitle } from '@/hooks/useUi'
-import { orderService } from '@/services/orderService'
+import { TRADE_FLOW, tradeEnquiryService } from '@/services/tradeEnquiryService'
 import { stock } from '@/data/images'
 import { fmtDate, inr } from '@/utils/format'
 
-const FLOW = ['PLACED', 'CONFIRMED', 'PACKED', 'SHIPPED', 'DELIVERED']
-
 export default function Account() {
   const { user, logout } = useAuth()
-  const { wishlist } = useCart()
+  const { wishlist } = useEnquiryList()
   const { t, lang } = useLang()
   useDocumentTitle(t('account.title'))
-  const { data: orders, loading } = useAsync(() => (user ? orderService.mine(user.id, user.email) : Promise.resolve([])), [user?.id])
+  const { data: orders, loading } = useAsync(() => (user ? tradeEnquiryService.mine(user.id, user.email) : Promise.resolve([])), [user?.id])
   if (!user) return <Navigate to="/login?next=/account" replace />
 
   return (
@@ -41,7 +39,7 @@ export default function Account() {
               )}
               <div className="mt-5 grid grid-cols-2 gap-2 text-center">
                 <div className="rounded-xl bg-cream-50 p-3">
-                  <Package className="mx-auto h-5 w-5 text-gold-600" />
+                  <ClipboardList className="mx-auto h-5 w-5 text-gold-600" />
                   <p className="mt-1 text-lg font-bold">{orders?.length ?? 0}</p>
                   <p className="text-[11px] text-ink-mute">{t('account.orders')}</p>
                 </div>
@@ -63,10 +61,10 @@ export default function Account() {
               {loading ? (
                 <PageLoader />
               ) : !orders?.length ? (
-                <EmptyState icon={<Package className="h-7 w-7" />} title={t('account.noOrders')} action={<Link to="/bazaar" className="btn-primary">{t('home.bazaarCta')}</Link>} />
+                <EmptyState icon={<ClipboardList className="h-7 w-7" />} title={t('account.noOrders')} action={<Link to="/bazaar" className="btn-primary">{t('home.bazaarCta')}</Link>} />
               ) : (
                 orders.map((o) => {
-                  const step = FLOW.indexOf(o.status)
+                  const step = TRADE_FLOW.indexOf(o.status)
                   return (
                     <article key={o.id} className="rounded-[1.5rem] bg-white p-6 shadow-card">
                       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -78,15 +76,15 @@ export default function Account() {
                         </div>
                         <div className="flex items-center gap-3">
                           <StatusBadge status={o.status} />
-                          <p className="font-display text-xl text-navy-900">{inr(o.total)}</p>
+                          <p className="font-display text-xl text-navy-900">≈ {inr(o.indicativeValue)}</p>
                         </div>
                       </div>
-                      {o.status !== 'CANCELLED' && (
-                        <div className="mt-5 grid grid-cols-5 gap-1">
-                          {FLOW.map((s, i) => (
+                      {o.status !== 'CLOSED' && (
+                        <div className="mt-5 grid grid-cols-4 gap-1">
+                          {TRADE_FLOW.map((s, i) => (
                             <div key={s}>
                               <div className={`h-1.5 rounded-full ${i <= step ? 'bg-leaf-600' : 'bg-navy-900/10'}`} />
-                              <p className={`mt-1.5 hidden text-[10px] font-bold uppercase tracking-wider sm:block ${i <= step ? 'text-leaf-700' : 'text-ink-mute'}`}>{s}</p>
+                              <p className={`mt-1.5 hidden text-[10px] font-bold uppercase tracking-wider sm:block ${i <= step ? 'text-leaf-700' : 'text-ink-mute'}`}>{s.replace(/_/g, ' ')}</p>
                             </div>
                           ))}
                         </div>

@@ -7,7 +7,7 @@ const PREFIX = 'fpcbf_demo_v1:'
  * Bump when seed data (products, news, gallery…) changes so existing browsers pick up
  * the new content instead of their stale localStorage copy. Demo data is reset once.
  */
-const SEED_VERSION = 2
+const SEED_VERSION = 3
 
 try {
   const VERSION_KEY = PREFIX + '__seed_version'
